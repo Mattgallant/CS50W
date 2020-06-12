@@ -1,0 +1,39 @@
+body {
+  background-color: #474B4F;
+  color: white;
+}
+
+/* Navbar styling */
+.navbar {
+  background-color: #222629;
+  color: white;
+  font-size: 24px;
+  border-bottom: 5px solid #61892F;
+}
+
+.navbar-nav > li {
+  /* Spacing between navbar items */
+  padding-left: 8px;
+}
+
+.navbar-brand, .nav-link {
+  color: white;
+}
+
+.active {
+  background-color: #61892F;
+  border-radius: 25px;
+}
+
+#myname {
+  font-weight: bold;
+}
+
+#mypic {
+  width: 225px;
+  border: 6px solid #61892F;
+}
+
+/* --------------- */
+
+/*# sourceMappingURL=theme.css.map */

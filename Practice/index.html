@@ -2,9 +2,44 @@
 
 <html>
 	<head>
+		<title> Practice Webpage </title>
+		<style>
+			@media print{ /* Any selectors in this selector will only apply when printing! */
+				.no-print {
+					display: none;
+				}
+			}
 
+			.container {
+				display: flex;
+				flex-wrap: wrap; /* Response Design: Wraps the page around! */
+			}
+
+			.container > div { /* For any div that is immediately a child of the container */
+				background-color: springgreen;
+				font-size: 20px;
+				margin: 20px;
+				padding: 20px;
+				width: 200px;
+			}
+
+		</style>
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	</head>
 	<body>
 		<p> Welcome to my 10/10 website </p>
+		<a href="hello.html"> Click Here </a>
+		<form>
+			<input name="name" type="text" placeholder="Name">
+			<input name="Password" type="password" placeholder="Password">
+		</form>
+		<p class="no-print"> This text will not display in print </p>
+
+		<div class="container">
+			<div> Div 1 </div>
+			<div> Div 2 </div>
+			<div> Div 3 </div>
+		</div>
 	</body>
 </html>

@@ -1,4 +1,4 @@
-.background {
+body {
   background-color: #474B4F;
   color: white;
 }
@@ -40,7 +40,7 @@
 
 #mypic {
   width: 225px;
-  border: 6px solid #61892F;
+  border: 5px solid #61892F;
 }
 
 .nav-link:hover {

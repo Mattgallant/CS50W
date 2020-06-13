@@ -13,7 +13,6 @@
 		<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 	</head>
 
-
 	<nav class="navbar navbar-expand-lg justify-content-around">
 		<span id="myname" class="display-4 mx-auto navbar-text"> Matthew Gallant </span>
 		<img src="imgs/CroppedMatt.png" class="rounded-circle mx-auto" id="mypic" alt="">
@@ -36,11 +35,10 @@
 	    </ul>
 	</nav>
 
-
 	<body>
         <div class="container">
-        	<p class="text-center mt-5 display-2 under-border"> Contact Me </p>
-        	<div class="mt-5"> <!-- Top section, text then icons -->
+        	<p class="text-center mt-5 display-2 under-border" style=""> Contact Me </p>
+        	<div class="mt-5 mb-4"> <!-- Top section, text then icons -->
         		<div class="row">
         			<div class="col-6 text-left" style="font-size: 27px;">
         				Please feel free to contact me with any questions, comments or simply to connect! The best way
@@ -60,23 +58,19 @@
 		        	</div>
 	        	</div>
         	</div>
-        	<div class="mb-5" style="background-color: ">
-        		<h3 > Email me! </h3>
-				<form>
+        	<div class="mb-4 mt-4" style="background-color: ">
+        		<h3 class="mb-2 lightaccent"> Email me! <span style="color: red; font-size: 15px"> NOTE: The form does not work as intended right now. Please email directly to: mattgallant24@gmail.com </span></h3>
+				<form action="mailto:mattgallant24@gmail.com" method="post" enctype="text/plain">
 					<div class="form-group">
-						<label for="exampleInputEmail1">Email address</label>
-						<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-						<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+						<label style="font-size: 24px;" for="exampleInputEmail1">Email address</label>
+						<input style="font-size: 24px;" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email">
+						<small id="emailHelp" class="form-text text-muted">Your email will not be shared.</small>
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1">Password</label>
-						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+						<label style="font-size: 24px;" for="exampleInputPassword1">Message</label>
+						<input style="font-size: 24px;" type="message" class="form-control" id="exampleInputPassword1" placeholder="Enter your message">
 					</div>
-					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="exampleCheck1">
-						<label class="form-check-label" for="exampleCheck1">Check me out</label>
-					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<button style="font-size: 24px;" type="submit" class="btn btn-accent mt-3">Submit</button>
 				</form>
         	</div>
         </div>

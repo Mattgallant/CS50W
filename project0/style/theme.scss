@@ -10,6 +10,16 @@ body {
 	color: white;
 }
 
+.home{
+	background-color: $lightbackground;
+	color: white;
+}
+
+
+#home-pic{
+	border: 28px solid $secondbackground;
+}
+
 /* Navbar styling */
 .navbar {
 	background-color: $mainbackground;
@@ -39,6 +49,10 @@ body {
 	width: 225px;
 	border: 6px solid $darkaccent;
 }
+
+.nav-link:hover{
+	color: $lightaccent;
+}
 /* --------------- */
 
 .exercise-border{
@@ -47,6 +61,14 @@ body {
 }
 
 .under-border{
-	border-bottom: 1px solid;
-	border-color: $lightbackground;
+	border-bottom: 2px solid;
+	border-color: $lightaccent;
+}
+
+.btn-accent{
+	background-color: $lightaccent;
+}
+
+.lightaccent {
+	color: $lightaccent;
 }

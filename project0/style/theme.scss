@@ -1,6 +1,8 @@
 $mainbackground: #222629;
 $secondbackground: #474B4F;
+$lightbackground: #6B6E70;
 $darkaccent: #61892F;
+$lightaccent: #86C232;
 
 
 body {
@@ -38,3 +40,13 @@ body {
 	border: 6px solid $darkaccent;
 }
 /* --------------- */
+
+.exercise-border{
+	border: 1px solid;
+  	border-color: $lightaccent;
+}
+
+.under-border{
+	border-bottom: 1px solid;
+	border-color: $lightbackground;
+}

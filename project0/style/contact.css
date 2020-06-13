@@ -1,0 +1,30 @@
+.fa-facebook,
+.fa-github,
+.fa-linkedin,
+.fa-instagram{
+    font-size: 5.5em;
+}
+
+.fa-linkedin{
+	color: #0B66C3;
+}
+
+.fa-facebook{
+	color: #4267B2;
+}
+
+.fa-github{
+	color:#323131 ;
+}
+
+.fa-instagram{
+	color:#C837AC ;
+}
+
+/* Icon pseudoclasses */
+.fa-facebook:hover,
+.fa-github:hover,
+.fa-linkedin:hover,
+.fa-instagram:hover{
+	color: #86C232;
+}

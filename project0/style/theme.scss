@@ -5,9 +5,10 @@ $darkaccent: #61892F;
 $lightaccent: #86C232;
 
 
-body {
+body{
 	background-color: $secondbackground;
 	color: white;
+	padding-bottom: 50px;
 }
 
 .home{
@@ -18,6 +19,16 @@ body {
 
 #home-pic{
 	border: 28px solid $secondbackground;
+}
+
+.footer{
+	color: white;
+	background-color: $mainbackground;
+	border-top: 2px solid $darkaccent;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
 }
 
 /* Navbar styling */
@@ -32,11 +43,15 @@ body {
 	padding-left: 8px;
 }
 
-.navbar-brand, .nav-link {
+.navbar-brand, .nav-link { /* Navitem white color */
 	color: white;
 }
 
-.active {
+.nav-link:hover{
+	color: $lightaccent;
+}
+
+.active { /* Active pill on navitems */
     background-color: $darkaccent;
     border-radius: 25px;
 }
@@ -50,9 +65,6 @@ body {
 	border: 5px solid $darkaccent;
 }
 
-.nav-link:hover{
-	color: $lightaccent;
-}
 /* --------------- */
 
 .exercise-border{

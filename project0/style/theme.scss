@@ -96,5 +96,21 @@ body{
 .skills-background{
 	background-color: $lightbackground;
 	border-radius: 10px;
-	padding: 5px
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.skills-font{
+	font-size: 20px;
+	color: white;
+}
+
+.fa-circle{
+	font-size: 20px;
+}
+
+.filled-circle{
+	color: $lightaccent;
 }

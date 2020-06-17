@@ -66,8 +66,13 @@ body {
   border-color: #86C232;
 }
 
-.under-border {
-  border-bottom: 2px solid;
+.under-border-primary {
+  border-bottom: 2.5px solid;
+  border-color: #86C232;
+}
+
+.under-border-secondary {
+  border-bottom: 1.5px solid;
   border-color: #86C232;
 }
 
@@ -77,6 +82,13 @@ body {
 
 .lightaccent {
   color: #86C232;
+}
+
+/* This stuff is all for the Skills & Projects page, skills.html */
+.skills-background {
+  background-color: #6B6E70;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 /*# sourceMappingURL=theme.css.map */

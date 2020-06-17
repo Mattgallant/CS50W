@@ -72,8 +72,13 @@ body{
   	border-color: $lightaccent;
 }
 
-.under-border{
-	border-bottom: 2px solid;
+.under-border-primary{
+	border-bottom: 2.5px solid;
+	border-color: $lightaccent;
+}
+
+.under-border-secondary{
+	border-bottom: 1.5px solid;
 	border-color: $lightaccent;
 }
 
@@ -83,4 +88,13 @@ body{
 
 .lightaccent {
 	color: $lightaccent;
+}
+
+
+
+/* This stuff is all for the Skills & Projects page, skills.html */
+.skills-background{
+	background-color: $lightbackground;
+	border-radius: 10px;
+	padding: 5px
 }

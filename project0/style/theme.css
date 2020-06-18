@@ -84,6 +84,10 @@ body {
   color: #86C232;
 }
 
+.darkaccent {
+  color: #61892F;
+}
+
 /* This stuff is all for the Skills & Projects page, skills.html */
 .skills-background {
   background-color: #6B6E70;
@@ -105,6 +109,26 @@ body {
 
 .filled-circle {
   color: #86C232;
+}
+
+#adb-pic {
+  border-radius: 10px;
+  border: 2px solid #61892F;
+}
+
+.projects-background {
+  background-color: #6B6E70;
+  border-radius: 10px;
+  font-size: 18px;
+  color: white;
+}
+
+.other-projects {
+  line-height: 1.5;
+}
+
+.other-projects li {
+  margin-top: 10px;
 }
 
 /*# sourceMappingURL=theme.css.map */

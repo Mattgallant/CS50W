@@ -90,6 +90,10 @@ body{
 	color: $lightaccent;
 }
 
+.darkaccent{
+	color: $darkaccent;
+}
+
 
 
 /* This stuff is all for the Skills & Projects page, skills.html */
@@ -113,4 +117,24 @@ body{
 
 .filled-circle{
 	color: $lightaccent;
+}
+
+#adb-pic{
+  	border-radius: 10px;
+  	border: 2px solid $darkaccent;
+}
+
+.projects-background{
+	background-color: $lightbackground;
+	border-radius: 10px;
+	font-size: 18px;
+	color: white;
+}
+
+.other-projects{
+	line-height: 1.5;
+}
+
+.other-projects li{
+	margin-top: 10px
 }

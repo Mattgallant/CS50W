@@ -138,3 +138,13 @@ body{
 .other-projects li{
 	margin-top: 10px
 }
+
+.class-layer{
+	background-color: $mainbackground;
+	border-radius: 10px
+}
+
+.about-pic{
+	border-radius: 10px;
+	border: 3px solid $darkaccent;
+}

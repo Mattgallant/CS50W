@@ -131,4 +131,14 @@ body {
   margin-top: 10px;
 }
 
+.class-layer {
+  background-color: #222629;
+  border-radius: 10px;
+}
+
+.about-pic {
+  border-radius: 10px;
+  border: 3px solid #61892F;
+}
+
 /*# sourceMappingURL=theme.css.map */

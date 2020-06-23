@@ -22,7 +22,7 @@ body{
 	color: white;
 }
 
-
+/* Responsive front page */
 @media(min-width:992px){  /* Large home pic, desktops */
 	#home-pic{
 		border: 28px solid $secondbackground;
@@ -34,40 +34,69 @@ body{
 	.intro-heading{
 		font-size: 64px;
 	}
+	.footer{
+		color: white;
+		background-color: $mainbackground;
+		border-top: 2px solid $darkaccent;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		line-height: 10px;
+	}
 }
 
-@media(max-width: 991.98px){ /* Medium home pic, phones/tablets */
+@media (max-width: 991.98px) and (min-width:770px){ /* Medium home pic, phones/tablets. 770px - 992px */
 	#home-pic{
 		border: 16px solid $secondbackground;
-		width: 280px;
-		margin-top: 16px
+		width: 320px;
+		margin-top: 35px
 	}
 	.intro-text{
-		font-size:15px;
+		font-size:18px;
 	}
 	.intro-heading{
-		font-size: 45px;
+		font-size: 50px;
+	}
+	.footer{
+		color: white;
+		background-color: $mainbackground;
+		border-top: 2px solid $darkaccent;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		line-height: 10px;
+		font-size: 15px
 	}
 }
 
-@media(min-width: 450px){
-
+@media(max-width: 769.99px) and (min-width: 0px) { /* Small, smartphone sizeish */
+	#home-pic{
+		border: 16px solid $secondbackground;
+		width: 420px;
+		margin-top: 10px
+	}
+		.intro-text{
+		font-size:22px;
+	}
+		.intro-heading{
+		font-size: 64px;
+	}
+	.footer{
+		color: white;
+		background-color: $mainbackground;
+		border-top: 2px solid $darkaccent;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		line-height: 10px;
+		font-size: 12px;
+	}
 }
 
-@media(max-width: 449.98px){}
 
-
-
-
-.footer{
-	color: white;
-	background-color: $mainbackground;
-	border-top: 2px solid $darkaccent;
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-}
 
 /* Navbar styling */
 .navbar {

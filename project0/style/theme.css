@@ -1,21 +1,55 @@
-@media (max-width: 992px) {
-  .home {
-    background-color: red;
-  }
-}
 body {
   background-color: #474B4F;
   color: white;
   padding-bottom: 80px;
 }
 
+/* Responsive front page */
 .home {
   background-color: #6B6E70;
   color: white;
 }
 
-/* Responsive front page */
-@media (min-width: 992px) {
+@media (min-width: 1600.1px) {
+  /* VERY LARGE desktops */
+  #home-pic {
+    border: 28px solid #474B4F;
+    width: 650px;
+    margin-right: -100px;
+  }
+
+  .intro-text {
+    font-size: 32px;
+    margin-left: -100px;
+  }
+
+  .intro-heading {
+    margin-left: -100px;
+    font-size: 84px;
+  }
+
+  .footer {
+    color: white;
+    background-color: #222629;
+    border-top: 2px solid #61892F;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    line-height: 10px;
+    font-size: 20px;
+  }
+
+  #myname {
+    font-size: 72px;
+    margin-right: 10px;
+  }
+
+  .navbar {
+    font-size: 26px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1600px) {
   /* Large home pic, desktops */
   #home-pic {
     border: 28px solid #474B4F;
@@ -39,6 +73,15 @@ body {
     bottom: 0;
     width: 100%;
     line-height: 10px;
+  }
+
+  #myname {
+    font-size: 52px;
+    margin-right: 8px;
+  }
+
+  .navbar {
+    font-size: 16.5px;
   }
 }
 @media (max-width: 991.98px) and (min-width: 770px) {
@@ -68,6 +111,15 @@ body {
     line-height: 10px;
     font-size: 15px;
   }
+
+  #myname {
+    font-size: 48px;
+    margin-right: 50px;
+  }
+
+  .navbar {
+    font-size: 15.5px;
+  }
 }
 @media (max-width: 769.99px) and (min-width: 0px) {
   /* Small, smartphone sizeish */
@@ -96,12 +148,20 @@ body {
     line-height: 10px;
     font-size: 12px;
   }
+
+  #myname {
+    font-size: 50px;
+  }
+
+  .navbar {
+    font-size: 25px;
+    text-align: center;
+  }
 }
 /* Navbar styling */
 .navbar {
   background-color: #222629;
   color: white;
-  font-size: 24px;
   border-bottom: 5px solid #61892F;
 }
 

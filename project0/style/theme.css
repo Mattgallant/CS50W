@@ -125,8 +125,8 @@ body {
 
 .other-projects {
   line-height: 1.5;
+  /* Example of SCSS nesting */
 }
-
 .other-projects li {
   margin-top: 10px;
 }
@@ -139,6 +139,23 @@ body {
 .about-pic {
   border-radius: 10px;
   border: 3px solid #61892F;
+}
+
+/* Exercise page styling */
+.exercise-table {
+  font-size: 20px;
+  background-color: #6B6E70;
+}
+
+/* Example of SCSS inhertiance, ended up not using this in production */
+.pic-background {
+  color: white;
+  background-color: #222629;
+  font-size: 20;
+}
+
+.pic-background {
+  border: 1px solid red;
 }
 
 /*# sourceMappingURL=theme.css.map */

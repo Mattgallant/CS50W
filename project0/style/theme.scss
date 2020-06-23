@@ -132,11 +132,10 @@ body{
 }
 
 .other-projects{
-	line-height: 1.5;
-}
-
-.other-projects li{
-	margin-top: 10px
+	line-height: 1.5;  /* Example of SCSS nesting */
+	li{
+		margin-top:10px;
+	}
 }
 
 .class-layer{
@@ -147,4 +146,25 @@ body{
 .about-pic{
 	border-radius: 10px;
 	border: 3px solid $darkaccent;
+}
+
+
+
+/* Exercise page styling */
+.exercise-table{
+	font-size: 20px;
+	background-color: $lightbackground
+}
+
+
+/* Example of SCSS inhertiance, ended up not using this in production */
+%background{
+	color: white;
+	background-color: $mainbackground;
+	font-size:20;
+}
+
+.pic-background{
+	@extend %background;
+	border: 1px solid red;
 }

@@ -4,6 +4,12 @@ $lightbackground: #6B6E70;
 $darkaccent: #61892F;
 $lightaccent: #86C232;
 
+@media (max-width: 992px){
+  .home{
+    background-color: red;
+  }
+}
+
 
 body{
 	background-color: $secondbackground;
@@ -17,9 +23,41 @@ body{
 }
 
 
-#home-pic{
-	border: 28px solid $secondbackground;
+@media(min-width:992px){  /* Large home pic, desktops */
+	#home-pic{
+		border: 28px solid $secondbackground;
+		width: 420px;
+	}
+	.intro-text{
+		font-size:22px;
+	}
+	.intro-heading{
+		font-size: 64px;
+	}
 }
+
+@media(max-width: 991.98px){ /* Medium home pic, phones/tablets */
+	#home-pic{
+		border: 16px solid $secondbackground;
+		width: 280px;
+		margin-top: 16px
+	}
+	.intro-text{
+		font-size:15px;
+	}
+	.intro-heading{
+		font-size: 45px;
+	}
+}
+
+@media(min-width: 450px){
+
+}
+
+@media(max-width: 449.98px){}
+
+
+
 
 .footer{
 	color: white;

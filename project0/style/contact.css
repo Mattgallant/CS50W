@@ -35,3 +35,11 @@
 	border-radius: 55px;
 	border: 5px solid #61892F;
 }
+
+@media (min-width: 992px) and (max-width: 3000px) {
+  /* Large home pic, desktops */
+  .contact-divider{
+  	margin-bottom: 40px;
+  }
+}
+

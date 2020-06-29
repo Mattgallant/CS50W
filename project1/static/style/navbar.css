@@ -1,0 +1,22 @@
+.navbar {
+  background-color: #4287f5;
+  color: white;
+  font-size: 20px;
+  border-bottom: 5px solid #003fa3;
+}
+
+.nav-link {
+  color: white;
+}
+
+.nav-link:hover {
+  color: #003fa3;
+}
+
+#siteName {
+  font-size: 25px;
+  text-shadow: 2px 2px #003fa3;
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=navbar.css.map */

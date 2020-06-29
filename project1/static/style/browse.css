@@ -1,0 +1,17 @@
+
+.book-card{ /* Book Cards */
+	margin-right: 10px;
+	margin-left: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: 2px solid #003fa3;
+	border-radius: 5px;
+	font-size: 18px;
+}
+
+.book-card-title{
+	font-size: 20px;
+	border-bottom: 1px solid #003fa3;
+	display: block;
+	margin-bottom: 10px;
+}

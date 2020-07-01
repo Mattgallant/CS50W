@@ -1,0 +1,44 @@
+
+.login-box{
+	border: 2px solid #003fa3;
+	border-radius: 5px;
+}
+
+.heading{
+	background-color: #4287f5;
+}
+
+.seperation-line{
+	height: 1px;
+	background-color: #003fa3;
+}
+
+.accent{
+	color: #003fa3;
+}
+
+.clickable{
+	color: #003fa3;
+}
+
+.clickable:hover{
+	color: #4287f5;
+	font-size: 18px;
+}
+
+.btn-blue{
+	background-color: #4287f5;
+	border-radius: 5px;
+	border: 1px solid #4287f5;
+	padding: 8px;
+	color: white;
+}
+
+.btn-blue:hover{
+	background-color: #003fa3;
+	border-radius: 5px;
+	border: 1px solid #4287f5;
+	padding: 9px;
+	color: white;
+}
+

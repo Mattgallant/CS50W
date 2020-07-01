@@ -1,5 +1,6 @@
 import os
 import sys
+import requests
 
 from flask import Flask, session, render_template, request
 from flask_session import Session
@@ -23,6 +24,7 @@ engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
 
+""" App Routes """ 
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -64,7 +66,7 @@ def register_response():
 
 	# Check if user already exists
 	allowed = db.execute("SELECT COUNT(*) FROM users WHERE username = :username", {"username": username}).fetchone()[0]
-	print(allowed, file=sys.stderr)
+	# print(allowed, file=sys.stderr)
 	allowed = True if (allowed == 0) else False
 	if allowed:
 		db.execute("INSERT INTO users (username, password) VALUES (:username, :password)", {"username": username, "password":password})
@@ -85,10 +87,24 @@ def browse():
 	books = db.execute("SELECT isbn, title, author, year FROM books ORDER BY random() LIMIT :limit_number", {"limit_number": limit_number}).fetchall()
 	return render_template("browse.html", books=books, current_number=limit_number, total_number=total_books[0])
 
-
 @app.route("/book/<string:isbn>")
 def book(isbn):
-	return f"This is book {isbn}!"
+	res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "5Ln6YakuzBEM4Wcbrnaw", "isbns": isbn})
+	if res.status_code != 200:
+		goodreads_success = False
+	else:
+		goodreads_success = True
+
+	print(res.json(), file=sys.stderr)
+	res = res.json()
+
+	book_info = db.execute("SELECT * FROM books where isbn= :isbn",
+		{"isbn": isbn}).fetchone()
+
+	return render_template("book.html", book=book_info, success=goodreads_success, goodreads = res)
+
+
+
 
 
 class Book:

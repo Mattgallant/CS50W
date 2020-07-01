@@ -1,0 +1,51 @@
+{% extends "navbar.html" %}
+
+
+{% block head %}
+	<title> Book Review Site </title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/book.css')}}">
+{% endblock head %}
+
+
+{% block body %}
+	<div class="text-center book-body">
+		<div class="row mb-2">
+			<div class="col-1"></div>
+			<div class="col-6 mt-3">
+				<h1> {{book.title}} </h1>
+				<h3 class="text-muted"> By {{book.author}} </h3>
+			</div>
+			<div class="col-5 text-left book-info">
+				<p><span style="font-weight: bold"> Published:</span> {{book.year}} </p> <hr>
+				<p><span style="font-weight: bold">ISBN:</span> {{book.isbn}} </p> <hr>
+				<p><span style="font-weight: bold">Book Review Site ID: </span>{{book.id}} </p>
+			</div>
+		</div>
+		<hr class="mx-4">
+		<div class="text-left mx-4 book-ratings">
+			<h3 style="font-weight: bold"> Reviews and Ratings </h3>
+			<div class="row text-center mt-3">
+				<div class="col-6">
+					<p><span style="font-weight: bold"> Book Review Site Rating:</span> FILLIN/5.0 </p>
+					<p><span style="font-weight: bold"> Number of Reviews:</span> FILLIN/5.0 </p>  
+				</div>
+				<div class="col-6">
+					{% if success %}
+						<p><span style="font-weight: bold"> Goodreads Review Average: </span> {{ goodreads["books"][0]["average_rating"] }}/5.00 </p>
+						<p><span style="font-weight: bold"> Number of Reviews:</span> {{goodreads["books"][0]["ratings_count"]}} </p> 
+					{% else %}
+						<p> This book has no Goodreads reviews found. </p>
+					{% endif %}
+				</div>
+			</div>
+			<div class="mt-4 review-body">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title card-header"> Review by user Mattgallant on 5/27/2020 </h5>
+						<p class="mt-4"> Review text here </p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock body %}

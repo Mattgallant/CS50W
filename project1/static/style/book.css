@@ -1,0 +1,25 @@
+.book-body{
+	margin-top: 80px;
+	padding: 10px;
+	font-size:25px;
+	border: 3px solid #003fa3;
+	border-radius: 10px;
+}
+
+.book-info{
+	margin-top: 17px;
+	line-height: 8px;
+	font-size: 22px;
+}
+
+.book-ratings{
+	font-size: 20px;
+	line-height: 8px;
+}
+
+.review-body{
+	font-size: 18px;
+}
+
+.card-title{
+}

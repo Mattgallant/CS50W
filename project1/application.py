@@ -89,27 +89,43 @@ def browse():
 
 @app.route("/book/<string:isbn>")
 def book(isbn):
+	""" Displays data about an individual book """
 	res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "5Ln6YakuzBEM4Wcbrnaw", "isbns": isbn})
 	if res.status_code != 200:
 		goodreads_success = False
 	else:
 		goodreads_success = True
 
-	print(res.json(), file=sys.stderr)
 	res = res.json()
 
 	book_info = db.execute("SELECT * FROM books where isbn= :isbn",
 		{"isbn": isbn}).fetchone()
-
-	return render_template("book.html", book=book_info, success=goodreads_success, goodreads = res)
-
-
+	print(book_info, file=sys.stderr)
+	print(book_info["title"], file=sys.stderr)
 
 
+	review_list = db.execute("SELECT * FROM reviews where book_id=:book_id", {"book_id": book_info["id"]}).fetchall()
+	print(review_list, file=sys.stderr)
 
-class Book:
-	def __init__(self, title, author, rating):
-		self.title = title
-		self.author = author
-		self.rating = rating
+
+	return render_template("book.html", book=book_info, success=goodreads_success, goodreads = res, review_list=review_list)
+
+@app.route("/book/<string:isbn>/posted", methods=["POST"])
+def book_review(isbn):
+
+	# Get required review data
+	username = session["username"]
+	user_id = db.execute("SELECT id FROM users WHERE username=:username", {"username": username}).fetchone()[0]
+	book_info = db.execute("SELECT id, title from books where isbn =:isbn", {"isbn": isbn}).fetchone()
+	book_id = book_info[0]
+	book_title = book_info[1]
+	review_text = request.form.get("review_text")
+
+	db.execute("INSERT INTO reviews (username, book_title, user_id, book_id, review_text) VALUES (:username, :book_title, :user_id, :book_id, :review_text)"
+		, {"username": username, "book_title": book_title, "user_id": user_id, "book_id":book_id, "review_text": review_text})
+	db.commit()
+
+	return book(isbn)
+
+
 

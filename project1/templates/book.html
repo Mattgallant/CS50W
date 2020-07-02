@@ -4,11 +4,12 @@
 {% block head %}
 	<title> Book Review Site </title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/book.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/login.css')}}">
 {% endblock head %}
 
 
 {% block body %}
-	<div class="text-center book-body">
+	<div class="text-center book-body mb-5">
 		<div class="row mb-2">
 			<div class="col-1"></div>
 			<div class="col-6 mt-3">
@@ -24,28 +25,48 @@
 		<hr class="mx-4">
 		<div class="text-left mx-4 book-ratings">
 			<h3 style="font-weight: bold"> Reviews and Ratings </h3>
-			<div class="row text-center mt-3">
-				<div class="col-6">
-					<p><span style="font-weight: bold"> Book Review Site Rating:</span> FILLIN/5.0 </p>
-					<p><span style="font-weight: bold"> Number of Reviews:</span> FILLIN/5.0 </p>  
-				</div>
-				<div class="col-6">
-					{% if success %}
-						<p><span style="font-weight: bold"> Goodreads Review Average: </span> {{ goodreads["books"][0]["average_rating"] }}/5.00 </p>
-						<p><span style="font-weight: bold"> Number of Reviews:</span> {{goodreads["books"][0]["ratings_count"]}} </p> 
-					{% else %}
-						<p> This book has no Goodreads reviews found. </p>
-					{% endif %}
-				</div>
+			<div class="text-center mt-3">
+				{% if success %}
+					<p><span style="font-weight: bold"> Goodreads Review Average: </span> {{ goodreads["books"][0]["average_rating"] }}/5.00 </p>
+					<p><span style="font-weight: bold"> Number of Reviews:</span> {{goodreads["books"][0]["ratings_count"]}} </p> 
+				{% else %}
+					<p> This book has no Goodreads reviews found. </p>
+				{% endif %}
 			</div>
 			<div class="mt-4 review-body">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title card-header"> Review by user Mattgallant on 5/27/2020 </h5>
-						<p class="mt-4"> Review text here </p>
+				{% if review_list %}
+					{% for review in review_list %}
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title card-header"> Review by user {{review.username}} on {{review.posted_date}} </h5>
+								<p class="mt-4"> {{review.review_text}} </p>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<p> There are currently no reviews for this book. </p>
+				{% endif %}
+
+			</div>
+
+			{% if session["logged_in"] %}
+	      		<div class="my-5">
+					<div class="login-box text-center mt-5 w-75 mx-auto py-2">
+						<h2> Leave a Review </h1>
+						<hr class="seperation-line w-100">
+						<form action="{{ url_for('book_review', isbn=book.isbn) }}" method="post">
+							<div class="form-group text-left mx-2" stlye="width: 90%">
+								<textarea type="text" class="form-control" style="height: 150px" name="review_text" ></textarea>
+							</div>
+							<button type="submit" class="btn-blue lead">Submit</button>
+						<form> 
 					</div>
 				</div>
-			</div>
+	      	{% else %}
+	      		<div class="text-center mx-auto my-5">
+	      			<a class="text-center" href="{{url_for('login')}}"> Log in </a> to leave a review.
+	      		</div>
+	      	{% endif %}
 		</div>
 	</div>
 {% endblock body %}

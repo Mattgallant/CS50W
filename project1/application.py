@@ -2,7 +2,7 @@ import os
 import sys
 import requests
 
-from flask import Flask, session, render_template, request
+from flask import Flask, session, render_template, request, redirect, url_for
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -74,9 +74,21 @@ def register_response():
 
 	return render_template("register_response.html", allowed=allowed, username=username)
 
-@app.route("/search")
+@app.route("/search", methods=["POST", "GET"])
 def search():
-	return "Not implemented"
+	search_query = request.form.get("search")
+	if search_query is not None:
+		search_query = "%" + search_query.lower() + "%"
+	print(search_query, file=sys.stderr)
+
+	books = db.execute("SELECT * FROM books WHERE author ILIKE :search_query OR title ILIKE :search_query OR isbn ILIKE :search_query",
+	 {"search_query": search_query}).fetchall()
+	print(books, file=sys.stderr)
+	current_number= len(books)
+
+	total_books = db.execute("SELECT COUNT(*) FROM books").fetchone()
+
+	return render_template("search.html", total_number=total_books[0], current_number = current_number, books=books )
 
 @app.route("/browse", methods=["POST", "GET"])
 def browse():
@@ -100,18 +112,21 @@ def book(isbn):
 
 	book_info = db.execute("SELECT * FROM books where isbn= :isbn",
 		{"isbn": isbn}).fetchone()
-	print(book_info, file=sys.stderr)
-	print(book_info["title"], file=sys.stderr)
+	# print(book_info, file=sys.stderr)
+	# print(book_info["title"], file=sys.stderr)
 
 
 	review_list = db.execute("SELECT * FROM reviews where book_id=:book_id", {"book_id": book_info["id"]}).fetchall()
 	print(review_list, file=sys.stderr)
 
-
 	return render_template("book.html", book=book_info, success=goodreads_success, goodreads = res, review_list=review_list)
+
+@app.route("/api/<string:isbn>")
+def book_api(isbn)
 
 @app.route("/book/<string:isbn>/posted", methods=["POST"])
 def book_review(isbn):
+	""" Processes a review being added to book with ISBN, redirects to book page """
 
 	# Get required review data
 	username = session["username"]
@@ -125,7 +140,9 @@ def book_review(isbn):
 		, {"username": username, "book_title": book_title, "user_id": user_id, "book_id":book_id, "review_text": review_text})
 	db.commit()
 
-	return book(isbn)
+	# After adding data to database, redirect back to base book page
+	return redirect(url_for('book', isbn=isbn))
+
 
 
 

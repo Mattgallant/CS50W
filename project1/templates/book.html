@@ -2,7 +2,7 @@
 
 
 {% block head %}
-	<title> Book Review Site </title>
+	<title> {{book.title}} - Book Review Site </title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/book.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/login.css')}}">
 {% endblock head %}
@@ -33,13 +33,13 @@
 					<p> This book has no Goodreads reviews found. </p>
 				{% endif %}
 			</div>
-			<div class="mt-4 review-body">
+			<div class="mt-5 review-body">
 				{% if review_list %}
 					{% for review in review_list %}
 						<div class="card">
 							<div class="card-body">
-								<h5 class="card-title card-header"> Review by user {{review.username}} on {{review.posted_date}} </h5>
-								<p class="mt-4"> {{review.review_text}} </p>
+								<h5 class="card-title card-header"> Review by user {{review.username}} on {{review.posting_date}} </h5>
+								<p class="mt-4 review-text"> {{review.review_text}} </p>
 							</div>
 						</div>
 					{% endfor %}

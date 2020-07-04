@@ -39,7 +39,8 @@
 .rating {
 	font-size: 2em;
     unicode-bidi: bidi-override;
-    direction: rtl;
+    direction: ltr;
+    left: 50px;
 }
 
 .rating > label {
@@ -51,6 +52,7 @@
     width: 1em;
     cursor: pointer;
     color: #000;
+    left: -280px;
 }
 
 .rating > label:hover,
@@ -66,5 +68,5 @@
     content: "\2605";
     position: absolute;
     color: #003fa3;
-    left: 0;
+    left: 2;
 }

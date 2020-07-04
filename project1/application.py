@@ -117,10 +117,13 @@ def book(isbn):
 
 
 	review_list = db.execute("SELECT * FROM reviews where book_id=:book_id", {"book_id": book_info["id"]}).fetchall()
-	# (review_list, file=sys.stderr)
+	book_rating_avg = db.execute("SELECT AVG(rating) from reviews where book_id=:book_id AND rating IS NOT NULL",{"book_id":book_info["id"]}).fetchone()[0]
+	book_rating_count = db.execute("SELECT COUNT(*) from reviews where book_id=:book_id AND rating IS NOT NULL",{"book_id":book_info["id"]}).fetchone()[0]
+	has_rating = True if (book_rating_count != 0) else False
+	if book_rating_count != 0:
+		book_rating_avg = truncate(book_rating_avg, 2)
 
-	return render_template("book.html", book=book_info, success=goodreads_success, goodreads = res, review_list=review_list)
-
+	return render_template("book.html", book=book_info, success=goodreads_success, goodreads = res, review_list=review_list, average_rating = book_rating_avg, count_rating = book_rating_count, has_ratings = has_rating)
 
 @app.route("/api/<string:isbn>")
 def book_api(isbn):
@@ -128,13 +131,18 @@ def book_api(isbn):
 	if book is None:
 		return jsonify({"error": "Could not find ISBN"}), 404
 
+	book_rating_avg = db.execute("SELECT AVG(rating) from reviews where book_id=:book_id AND rating IS NOT NULL",{"book_id":book["id"]}).fetchone()[0]
+	book_review_count = db.execute("SELECT COUNT(*) from reviews where book_id=:book_id",{"book_id":book["id"]}).fetchone()[0]
+
+	book_rating_avg = "N/A" if book_rating_avg is None else str(truncate(book_rating_avg, 2))
+
 	return jsonify({
 		"title": book["title"],
 		"author": book["author"],
 		"year": book["year"],
 		"isbn": isbn,
-		"review_count": None,
-		"average_score": None
+		"review_count": book_review_count,
+		"average_score": book_rating_avg
 		})
 
 @app.route("/book/<string:isbn>/posted", methods=["POST"])
@@ -148,6 +156,8 @@ def book_review(isbn):
 	book_id = book_info[0]
 	book_title = book_info[1]
 	review_text = request.form.get("review_text")
+	rating = request.form.get("star")
+
 
 	# Check if user has already posted for this book before
 	previous_reviews = db.execute("SELECT COUNT(*) FROM reviews WHERE user_id=:user_id AND book_id=:book_id", {"user_id": user_id, "book_id": book_id}).fetchone()[0]
@@ -156,12 +166,22 @@ def book_review(isbn):
 	if previous_reviews != 0:
 		return render_template("review_fail.html", isbn=isbn)
 
-	db.execute("INSERT INTO reviews (username, book_title, user_id, book_id, review_text) VALUES (:username, :book_title, :user_id, :book_id, :review_text)"
-		, {"username": username, "book_title": book_title, "user_id": user_id, "book_id":book_id, "review_text": review_text})
+	db.execute("INSERT INTO reviews (username, book_title, user_id, book_id, review_text, rating) VALUES (:username, :book_title, :user_id, :book_id, :review_text, :rating)"
+		, {"username": username, "book_title": book_title, "user_id": user_id, "book_id":book_id, "review_text": review_text, "rating": rating})
 	db.commit()
 
 	# After adding data to database, redirect back to base book page
 	return redirect(url_for('book', isbn=isbn))
+
+
+
+def truncate(f, n):
+    '''Truncates/pads a float f to n decimal places without rounding'''
+    s = '{}'.format(f)
+    if 'e' in s or 'E' in s:
+        return '{0:.{1}f}'.format(f, n)
+    i, p, d = s.partition('.')
+    return '.'.join([i, (d+'0'*n)[:n]])
 
 
 

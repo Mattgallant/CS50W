@@ -5,6 +5,7 @@
 	<title> {{book.title}} - Book Review Site </title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/book.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/login.css')}}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 {% endblock head %}
 
 {% block body %}
@@ -22,15 +23,27 @@
 			</div>
 		</div>
 		<hr class="mx-4">
-		<div class="text-left mx-4 book-ratings">
-			<h3 style="font-weight: bold"> Reviews and Ratings </h3>
+		<div class="text-left mx-4 mt-3 book-ratings">
+			<h3 style="font-weight: bold" class="text-center"> Reviews and Ratings </h3>
 			<div class="text-center mt-3">
-				{% if success %}
-					<p><span style="font-weight: bold"> Goodreads Review Average: </span> {{ goodreads["books"][0]["average_rating"] }}/5.00 </p>
-					<p><span style="font-weight: bold"> Number of Reviews:</span> {{goodreads["books"][0]["ratings_count"]}} </p> 
-				{% else %}
-					<p> This book has no Goodreads reviews found. </p>
-				{% endif %}
+				<div class="row">
+					<div class="col-6">
+						{% if has_ratings %}
+							<p><span style="font-weight: bold"> Book Review Site Rating: </span> {{average_rating}}/5.00 </p>
+							<p><span style="font-weight: bold"> Number of Ratings:</span> {{count_rating}} </p> 
+						{% else %}
+							<p> This book has no ratings yet! </p>
+						{% endif %}
+					</div>
+					<div class="col-6">
+						{% if success %}
+							<p><span style="font-weight: bold"> Goodreads Review Average: </span> {{ goodreads["books"][0]["average_rating"] }}/5.00 </p>
+							<p><span style="font-weight: bold"> Number of Ratings:</span> {{goodreads["books"][0]["ratings_count"]}} </p> 
+						{% else %}
+							<p> This book has no Goodreads reviews found. </p>
+						{% endif %}
+					</div>
+				</div>
 			</div>
 			<div class="mt-5 review-body">
 				{% if review_list %}
@@ -53,11 +66,10 @@
 						<h2> Leave a Review </h1>
 						<hr class="seperation-line w-100">
 						<form action="{{ url_for('book_review', isbn=book.isbn) }}" method="post">
-							<div class="form-group text-left mx-2" stlye="width: 90%">
+							<div class="form-group text-left mx-2" stlye="width: 90%; display: block">
 								<textarea type="text" class="form-control" style="height: 150px" name="review_text" ></textarea>
 							</div>
-							<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-					        <div class="rating my-4 ml-n5">
+					        <div class="rating my-4">
 					            <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" />
 					            <label for="star5">☆</label>
 					            <input id="star4" name="star" type="radio" value="4" class="radio-btn hide" />

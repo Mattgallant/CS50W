@@ -2,7 +2,7 @@ import os
 import sys
 import requests
 
-from flask import Flask, session, render_template, request, redirect, url_for
+from flask import Flask, session, render_template, request, redirect, url_for, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -79,11 +79,11 @@ def search():
 	search_query = request.form.get("search")
 	if search_query is not None:
 		search_query = "%" + search_query.lower() + "%"
-	print(search_query, file=sys.stderr)
+	# print(search_query, file=sys.stderr)
 
 	books = db.execute("SELECT * FROM books WHERE author ILIKE :search_query OR title ILIKE :search_query OR isbn ILIKE :search_query",
 	 {"search_query": search_query}).fetchall()
-	print(books, file=sys.stderr)
+	# print(books, file=sys.stderr)
 	current_number= len(books)
 
 	total_books = db.execute("SELECT COUNT(*) FROM books").fetchone()
@@ -117,12 +117,25 @@ def book(isbn):
 
 
 	review_list = db.execute("SELECT * FROM reviews where book_id=:book_id", {"book_id": book_info["id"]}).fetchall()
-	print(review_list, file=sys.stderr)
+	# (review_list, file=sys.stderr)
 
 	return render_template("book.html", book=book_info, success=goodreads_success, goodreads = res, review_list=review_list)
 
+
 @app.route("/api/<string:isbn>")
-def book_api(isbn)
+def book_api(isbn):
+	book = db.execute("SELECT * FROM books where isbn=:isbn", {"isbn": isbn}).fetchone()
+	if book is None:
+		return jsonify({"error": "Could not find ISBN"}), 404
+
+	return jsonify({
+		"title": book["title"],
+		"author": book["author"],
+		"year": book["year"],
+		"isbn": isbn,
+		"review_count": None,
+		"average_score": None
+		})
 
 @app.route("/book/<string:isbn>/posted", methods=["POST"])
 def book_review(isbn):
@@ -135,6 +148,13 @@ def book_review(isbn):
 	book_id = book_info[0]
 	book_title = book_info[1]
 	review_text = request.form.get("review_text")
+
+	# Check if user has already posted for this book before
+	previous_reviews = db.execute("SELECT COUNT(*) FROM reviews WHERE user_id=:user_id AND book_id=:book_id", {"user_id": user_id, "book_id": book_id}).fetchone()[0]
+	# print(f"Previous Reviews: {previous_reviews}", file=sys.stderr)
+
+	if previous_reviews != 0:
+		return render_template("review_fail.html", isbn=isbn)
 
 	db.execute("INSERT INTO reviews (username, book_title, user_id, book_id, review_text) VALUES (:username, :book_title, :user_id, :book_id, :review_text)"
 		, {"username": username, "book_title": book_title, "user_id": user_id, "book_id":book_id, "review_text": review_text})

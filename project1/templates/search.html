@@ -24,6 +24,8 @@
 				<p> Author: {{book.author}}</p>
 				<p> Year: {{book.year}}</p>
 			</div>
+			{% else %}
+				<p> No books found. </p>
 			{% endfor %}
 		</div>
 	</div>

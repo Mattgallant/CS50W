@@ -1,0 +1,14 @@
+{% extends "navbar.html" %}
+
+
+{% block head %}
+	<title> Review Fail - Book Review Site </title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/browse.css')}}">
+{% endblock head %}
+
+{% block body %}
+	<div class="text-center mt-5 mx-2">
+		<h2> Sorry, you've already made a review for this book. You cannot make multiple. </h2>
+		<h3> Click <a href="{{ url_for('book', isbn=isbn) }}">here</a> to go back to the book. </h3>
+	</div>
+{% endblock body %}

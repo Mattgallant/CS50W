@@ -1,0 +1,16 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia - Search Results
+{% endblock %}
+
+{% block body %}
+    <h1>{{ headline }}</h1>
+    <form action="{% url 'post' %}" method="post">
+	   	{% csrf_token %}
+		<input type="text" name="title" class="mt-1" placeholder="Article Title">
+		<p class="mt-4 mb-n1"> Enter Markdown styled content </p>
+		<textarea name="content" class="w-75" style="display: block"> </textarea>
+   		<input type="submit" class="justify-content-center text-center mt-2" style="font-size:22px">
+   	</form>
+{% endblock %}

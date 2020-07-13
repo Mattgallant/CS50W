@@ -1,0 +1,1 @@
+SASS is a tool used to apply extra functionality when writing [CSS](/wiki/css). 

@@ -5,11 +5,10 @@
 {% endblock %}
 
 {% block body %}
-	<form action="{% url 'edit' %}" method="post">
+	<h1 class="mt-4 mb-1"> Edit {{title}} page </h1>
+	<form action="{% url 'edit' title %}" method="post">
 	   	{% csrf_token %}
-		<p class="mt-4 mb-n1"> Edit {{title}} page </p>
-		<textarea name="content" class="w-75" style="display: block"> {{body}}</textarea>
+		<textarea name="content" class="w-75" style="display: block">{{body}}</textarea>
    		<input type="submit" class="justify-content-center text-center mt-2" style="font-size:22px">
    	</form>
-	<a href="{{title}}/edit"><button class="ml-3 mt-5"> Submit Edit </button></a>
 {% endblock %}

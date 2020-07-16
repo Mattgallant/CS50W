@@ -1,0 +1,48 @@
+{% extends "auctions/layout.html" %}
+{% block title %}
+
+	Auctions - {{listing.title}}
+
+{% endblock title %}
+
+{% block body %}
+	<div class="mx-5 my-3 text-center">
+		<div class="card w-75 justify-content-center mx-auto">
+			<img class="card-img-top" style="height: 60vh" src="{{listing.image_url}}" alt="Card image cap">
+			<div class="card-body">
+				<h1 class="card-title text-center">{{listing.title}}</h1>
+				<p class="card-text">{{listing.description}}</p>
+			<div class="text-left">
+				<p> <strong> Starting Bid:</strong> ${{listing.starting_bid}}</p>
+				<p> <strong> Current Bid: </strong> $500 </p>
+			</div>
+			<h3 class="mb-n2"> Leave a comment </h3>
+			<p class="text-muted"> Max Characters: 500 </p>
+			<form acions="{% url 'create' %}" method="post" class="mb-4 mt-n1">
+		    	{% csrf_token %}
+				<textarea class="w-75" style="height: 22vh" name="body"> </textarea>
+		    	<br>
+	    		<input class="btn btn-primary mt-2 justify-content-center" type="submit">
+	    	</form>
+			{% if user.is_authenticated %}
+				{% if on_watchlist %}
+					<a href="{% url 'watchlist_remove' listing.id %}" class="btn btn-primary text-center justify-content-center mx-auto">Remove from Watchlist</a>
+				{% else %}
+					<a href="{% url 'watchlist_add' listing.id %}" class="btn btn-primary text-center justify-content-center mx-auto">Add to Watchlist</a>
+				{% endif %}
+			{% endif %}
+			</div>
+		</div>
+		<div class="comment-section my-4">
+			{% for comment in comments %}
+				<div class="card w-75 justify-content-center mx-auto text-left mt-2">
+					<div class="card-body">
+						<p class="card-title"><strong> By {{comment.user}} on {{comment.date}} </strong></p>
+						<hr>
+						{{comment.body}}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

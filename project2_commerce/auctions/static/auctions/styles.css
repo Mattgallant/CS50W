@@ -1,3 +1,7 @@
-body {
-    padding: 10px;
+.card-img-top{
+	border-bottom: .6px solid #007BFF;
+}
+
+.card{
+	border: 1px solid #007BFF;
 }

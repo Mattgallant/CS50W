@@ -1,12 +1,12 @@
 {% extends "auctions/layout.html" %}
 {% block title %}
 
-	Auctions - Home
+	Auctions - Watchlist
 
 {% endblock title %}
 
 {% block body %}
-    <h2 class="ml-5 mb-4">Active Listings</h2>
+    <h2 class="ml-5 mb-4">Watchlist for {{user.username}}</h2>
 	<div class="mx-5 text-left">
 		<div class="row mb-3">
 			{% for listing in listings %}
@@ -24,7 +24,7 @@
 				</div>	
 			</div>
 			{% empty %}
-				<p> There are currently no listings. </p>
+				<p> There are currently no listings on your watchlist. </p>
 			{% endfor %}
 		</div>
 		<br>

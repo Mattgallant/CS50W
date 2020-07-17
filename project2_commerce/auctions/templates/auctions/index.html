@@ -15,8 +15,8 @@
 					<img class="card-img-top h-100" src="{{listing.image_url}}" alt="Card image cap">
 					<div class="card-body">
 						<h5 class="card-title text-center">{{listing.title}}</h5>
-						<p class="card-text">{{listing.description}}</p>
-						<p class="card-text"> <strong> Current Price </strong>: {{listing.starting_bid}} </p>
+						<p class="card-text">{{listing.description|slice:":100"}}...</p>
+						<p class="card-text"> <strong> Current Price </strong>: ${{listing.current_bid}} </p>
 						<div class="text-center">
 							<a href="{% url 'listing_page' listing.id %}" class="btn btn-primary text-center justify-content-center mx-auto">See Listing</a>
 						</div>

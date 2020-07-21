@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+  var load_sent = false;
 
   // Use buttons to toggle between views
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
@@ -6,9 +7,31 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
 
-  // By default, load the inbox
-  load_mailbox('inbox');
+  const form = document.querySelector('#compose-form');
+  form.addEventListener('submit', function() {
+    load_sent = true;
+    const recipients = document.querySelector('#compose-recipients').value;
+    const subject = document.querySelector('#compose-subject').value;
+    const body = document.querySelector('#compose-body').value;
+    fetch('/emails', {
+      method: 'POST',
+      body: JSON.stringify({
+          recipients: recipients,
+          subject: subject,
+          body: body
+      })
+    })
+  });
+
+  if (load_sent){
+    load_mailbox('sent');
+    load_sent = false;
+  } else {
+    // By default, load the inbox
+    load_mailbox('inbox');
+  }
 });
+
 
 function compose_email() {
 
@@ -31,3 +54,4 @@ function load_mailbox(mailbox) {
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 }
+

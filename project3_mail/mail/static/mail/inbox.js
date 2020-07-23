@@ -1,5 +1,10 @@
+
 document.addEventListener('DOMContentLoaded', function() {
-  var load_sent = false;
+  if (document.querySelector('#emails-view').innerHTML == "<h3>Sent</h3>"){
+    load_mailbox('sent');
+  } else{
+    load_mailbox('inbox');
+  }
 
   // Use buttons to toggle between views
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
@@ -7,9 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
 
-  const form = document.querySelector('#compose-form');
+  // Handle sending an email, return to sent inbox after
+  let form = document.querySelector('#compose-form');
   form.addEventListener('submit', function() {
-    load_sent = true;
+    console.log("Form Submitted");
     const recipients = document.querySelector('#compose-recipients').value;
     const subject = document.querySelector('#compose-subject').value;
     const body = document.querySelector('#compose-body').value;
@@ -21,15 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
           body: body
       })
     })
-  });
-
-  if (load_sent){
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+    });
     load_mailbox('sent');
-    load_sent = false;
-  } else {
-    // By default, load the inbox
-    load_mailbox('inbox');
-  }
+    console.log("holla");
+  });
 });
 
 
@@ -46,7 +50,7 @@ function compose_email() {
 }
 
 function load_mailbox(mailbox) {
-  
+  console.log(`Page loaded ${mailbox}`);
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';

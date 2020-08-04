@@ -1,17 +1,14 @@
 
-let once = true;
-
 document.addEventListener('DOMContentLoaded', function() {
-  if (once){
-    load_mailbox("inbox");
-    once = false;
-  }
+    
   // Use buttons to toggle between views
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
 
+  // By default, load the inbox view
+  load_mailbox("inbox");
 });
 
 
@@ -29,8 +26,7 @@ function compose_email() {
 
   // Handle sending an email, return to sent inbox after TODO: Not returning to sent inbox
   let form = document.querySelector('#compose-form');
-  form.addEventListener('submit', function() {
-    setTimeout(function(){ load_mailbox("sent"); }, 1000)
+  form.addEventListener('submit', function(ev) {
     const recipients = document.querySelector('#compose-recipients').value;
     const subject = document.querySelector('#compose-subject').value;
     const body = document.querySelector('#compose-body').value;
@@ -46,6 +42,9 @@ function compose_email() {
     .then(result => {
       console.log(result);
     })
+    ev.preventDefault();
+    load_mailbox('sent'); //This is not working!!! What to do?
+    return false;
   });
 }
 

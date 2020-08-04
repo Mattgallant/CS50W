@@ -24,9 +24,12 @@ function compose_email() {
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
 
-  // Handle sending an email, return to sent inbox after TODO: Not returning to sent inbox
+  // Handle sending an email, return to sent inbox after 
   let form = document.querySelector('#compose-form');
   form.addEventListener('submit', function(ev) {
+    // Send back to sent mailbox
+    ev.preventDefault();
+    setTimeout(function() { load_mailbox("sent"); }, 100);
     const recipients = document.querySelector('#compose-recipients').value;
     const subject = document.querySelector('#compose-subject').value;
     const body = document.querySelector('#compose-body').value;
@@ -42,8 +45,6 @@ function compose_email() {
     .then(result => {
       console.log(result);
     })
-    ev.preventDefault();
-    load_mailbox('sent'); //This is not working!!! What to do?
     return false;
   });
 }

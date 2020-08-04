@@ -1,0 +1,39 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+	<div class="card profile-border background-color neutral-color">
+		<div class="card-body">
+		  	<div class="row">
+		  		<div class="col-5">
+					<h1 class="card-title text-center light-accent">{{ username }}</h1>
+					<div class="row">
+						<div class="col-5 text-right">Followers: {{ followers|length }} </div>
+						<div class="col-2"></div>
+						<div class="col-5 text-left">Following: {{ following }}</div>
+					</div>
+					{% if user.is_authenticated %} 
+					<!-- To see follow options, must be authenticated, not be user and follow status dependent -->
+						{% if user.username != username %}
+							{% if user in followers %}
+								<div class="mt-3 d-flex justify-content-center">
+									<a class="btn align-content-center follow-button" href="{% url 'unfollow' username %}" role="button">Unfollow</a>
+								</div>
+							{% else %}
+								<div class="mt-3 d-flex justify-content-center">
+									<a class="btn align-content-center follow-button" href="{% url 'follow' username %}" role="button">Follow</a>
+								</div>
+							{% endif %}
+						{% endif %}
+					{% endif %}
+				</div>
+				<div class="col-1"></div> <!-- Space Col -->
+				<div class="col-6 mt-4">
+					<div class="card profile-border alt-background-color neutral-color">
+						<div class="card-body">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

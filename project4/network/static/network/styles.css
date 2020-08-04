@@ -1,0 +1,55 @@
+/* Website Coloring Theme */
+.background-color{
+	background-color: #0B0C10;
+}
+
+.alt-background-color{
+	background-color: #1F2833;
+}
+
+.alt-font-color{
+	background-color: #1F2833;
+}
+
+.neutral-color{
+	color: #C5C6C7;
+}
+
+.dark-accent{
+	background-color: #45A29E;
+}
+
+.light-accent{
+	color: #66FCF1;
+}
+
+
+
+.navbar-border{
+	border-bottom: 2px solid #45A29E;
+}
+
+.neutral-link{
+	color: #C5C6C7;
+}
+
+.neutral-link:hover{
+	color: #45A29E;
+}
+
+
+
+.profile-border{
+	border: 2px solid #45A29E;
+	border-radius: 15px
+}
+
+.follow-button{
+	background-color: #1F2833;
+	color: white;
+}
+
+.follow-button:hover{
+	background-color: #1F2833;
+	color: #66FCF1;
+}

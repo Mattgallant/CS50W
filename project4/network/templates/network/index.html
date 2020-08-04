@@ -1,5 +1,15 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    TODO
+    {% for post in posts %}
+    	<div class="card profile-border background-color neutral-color">
+			<div class="card-body">
+				<h3 class="card-title text-center light-accent">Posted by {{ post.username }} at {{post.date}}</h3>
+				<p> {{post.content}} </p>
+				<p> The post has {{post.likes|length}} likes </p>
+			</div>
+		</div>
+    {% empty %}
+    	<h3 class="text-center light-accent"> There are currently no posts </h3>
+    {% endfor %}
 {% endblock %}

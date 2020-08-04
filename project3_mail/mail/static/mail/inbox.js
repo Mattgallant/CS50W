@@ -29,7 +29,7 @@ function compose_email() {
   form.addEventListener('submit', function(ev) {
     // Send back to sent mailbox
     ev.preventDefault();
-    setTimeout(function() { load_mailbox("sent"); }, 100);
+    setTimeout(function() { load_mailbox("sent"); }, 10);
     const recipients = document.querySelector('#compose-recipients').value;
     const subject = document.querySelector('#compose-subject').value;
     const body = document.querySelector('#compose-body').value;
@@ -49,15 +49,6 @@ function compose_email() {
   });
 }
 
-
-function reply_email(id){
-  // Show compose view and hide other views
-  document.querySelector('#emails-view').style.display = 'none';
-  document.querySelector('#open-mail-view').style.display= 'none';
-  document.querySelector('#compose-view').style.display = 'block';
-
-  document.querySelector('#compose-recipients').value=""
-}
 
 function load_email(id){
   document.querySelector('#emails-view').style.display = 'none';
@@ -89,13 +80,12 @@ function load_email(id){
             document.querySelector('.btn-archive').innerHTML = "Archive";
         }
         document.querySelector('.btn-archive').addEventListener('click', () => archive(data.id));
+
         //Handle replying
         document.querySelector('.btn-reply').addEventListener('click', () => {
 
           // Show compose view and hide other views
-          document.querySelector('#emails-view').style.display = 'none';
-          document.querySelector('#open-mail-view').style.display= 'none';
-          document.querySelector('#compose-view').style.display = 'block';
+          compose_email();
 
           document.querySelector('#compose-recipients').value=`${data.sender}`;
           document.querySelector('#compose-subject').value=`Re: ${data.subject}`;

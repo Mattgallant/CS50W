@@ -2,77 +2,65 @@
 
 {% block head %}
 	<script type="text/javascript">
-		document.addEventListener('DOMContentLoaded', function() {
-
-			// Create all the not-liked -> liked listeners
-			let not_liked = document.getElementsByClassName("not-liked");
-			console.log(not_liked.length);
-			for (let i = 0; i < not_liked.length; i++) { // Set up all of the button handlers, one by one
-				console.log(not_liked[i].classList);
-				not_liked[i].addEventListener('click', function(event) {
-					//Get post based on post id
-					let post_id = parseInt(not_liked[i].parentElement.previousElementSibling.innerHTML);
-
-					//Update database with new like
-			        fetch(`post/${post_id}`, {
-			          method: 'PUT',
-			          body: JSON.stringify({
-			              liked: true
-			          })
-			        })	//Display the new like count, asynchronously, sequenced after updating the DB is done
-				        .then(function(event){
-				        	fetch(`post/${post_id}`)
-							// Put response into json form
-							.then(response => response.json())
-							.then(data => {
-								likes_count = data.likes.length;
-								not_liked[i].nextElementSibling.innerHTML = likes_count;
-							});
-						});
-					//Update to new heart emoji to indicate it was liked
-					event.target.classList.remove("far");
-					event.target.classList.add("fas");
-					event.target.classList.add("light-accent");
-					event.target.classList.remove("neutral-link");
-					event.target.parentElement.classList.remove("not-liked");
-					event.target.parentElement.classList.add("liked");
-				}, false);
+		function unlike(element){
+			element.firstChild.classList.remove("fas");
+			element.firstChild.classList.add("far");
+			element.firstChild.classList.add("neutral-link");
+			element.firstChild.classList.remove("light-accent");
+			element.onclick= function() {
+				like(element);
 			}
+			let post_id = parseInt(element.parentElement.previousElementSibling.innerHTML);
+			console.log(post_id);
 
-			// Create all the liked -> not-liked
-			like = document.getElementsByClassName("liked");
-			for (let i = 0; i < like.length; i++) { // Set up all of the button handlers, one by one
-				console.log(like[i].classList);
-				like[i].addEventListener('click', function(event) {
-					//Get post based on post id
-					let post_id = parseInt(like[i].parentElement.previousElementSibling.innerHTML);
+			//Update database with new like
+		    fetch(`post/${post_id}`, {
+		      method: 'PUT',
+		      body: JSON.stringify({
+		          liked: false
+		      })
+		    })	//Display the new like count, asynchronously, sequenced after updating the DB is done
+	        .then(function(){
+	        	fetch(`post/${post_id}`)
+				// Put response into json form
+				.then(response => response.json())
+				.then(data => {
+					likes_count = data.likes.length;
+					console.log(likes_count);
+					element.nextElementSibling.innerHTML = likes_count;
+				});
+			});
+		}
 
-					//Update database with new like
-			        fetch(`post/${post_id}`, {
-			          method: 'PUT',
-			          body: JSON.stringify({
-			              liked: false
-			          })
-			        })	//Display the new like count, asynchronously, sequenced after updating the DB is done
-				        .then(function(){
-				        	fetch(`post/${post_id}`)
-							// Put response into json form
-							.then(response => response.json())
-							.then(data => {
-								likes_count = data.likes.length;
-								like[i].nextElementSibling.innerHTML = likes_count;
-							});
-						});
-					//Update to new heart emoji to indicate it was unliked
-					event.target.classList.remove("fas");
-					event.target.classList.remove("light-accent");
-					event.target.classList.add("far");
-					//event.target.classList.add("neutral-link");
-					event.target.parentElement.classList.add("not-liked");
-					event.target.parentElement.classList.remove("liked");
-				}, false);
+		function like(element){
+			element.firstChild.classList.remove("far");
+			element.firstChild.classList.add("fas");
+			element.firstChild.classList.add("light-accent");
+			element.firstChild.classList.remove("neutral-link");
+			element.onclick= function() {
+				unlike(element);
 			}
-		});
+			//Get post based on post id
+			let post_id = parseInt(element.parentElement.previousElementSibling.innerHTML);
+
+			//Update database with new like
+	        fetch(`post/${post_id}`, {
+	          method: 'PUT',
+	          body: JSON.stringify({
+	              liked: true
+	          })
+	        })	//Display the new like count, asynchronously, sequenced after updating the DB is done
+	       	.then(function(event){
+	        	fetch(`post/${post_id}`)
+				// Put response into json form
+				.then(response => response.json())
+				.then(data => {
+					likes_count = data.likes.length;
+					element.nextElementSibling.innerHTML = likes_count;
+				});
+			});
+		}
+
 	</script>
 {% endblock %}
 
@@ -87,9 +75,9 @@
 				<p style="display: none"> {{post.id}} </p>
 				<div class="mt-2 text-center mb-n2">
 					{% if user in post.likes.all %} 
-						<a class="liked"><i class="light-accent fas fa-heart mr-1"></i></a>
+						<a onclick="unlike(this)"><i class="light-accent fas fa-heart mr-1"></i></a>
 					{% else %}
-						<a class="not-liked"><i class="neutral-link far fa-heart mr-1"></i></a> 
+						<a onclick="like(this)"><i class="neutral-link far fa-heart mr-1"></i></a> 
 					{% endif %} 
 					<span> {{post.likes.count}} </span>
 				</div>

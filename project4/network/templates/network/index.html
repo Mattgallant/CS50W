@@ -3,8 +3,44 @@
 {% block head %}
 	<script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function() {
-			let like = document.getElementsByClassName("not-liked");
-			console.log(like.length);
+
+			// Create all the not-liked -> liked listeners
+			let not_liked = document.getElementsByClassName("not-liked");
+			console.log(not_liked.length);
+			for (let i = 0; i < not_liked.length; i++) { // Set up all of the button handlers, one by one
+				console.log(not_liked[i].classList);
+				not_liked[i].addEventListener('click', function(event) {
+					//Get post based on post id
+					let post_id = parseInt(not_liked[i].parentElement.previousElementSibling.innerHTML);
+
+					//Update database with new like
+			        fetch(`post/${post_id}`, {
+			          method: 'PUT',
+			          body: JSON.stringify({
+			              liked: true
+			          })
+			        })	//Display the new like count, asynchronously, sequenced after updating the DB is done
+				        .then(function(event){
+				        	fetch(`post/${post_id}`)
+							// Put response into json form
+							.then(response => response.json())
+							.then(data => {
+								likes_count = data.likes.length;
+								not_liked[i].nextElementSibling.innerHTML = likes_count;
+							});
+						});
+					//Update to new heart emoji to indicate it was liked
+					event.target.classList.remove("far");
+					event.target.classList.add("fas");
+					event.target.classList.add("light-accent");
+					event.target.classList.remove("neutral-link");
+					event.target.parentElement.classList.remove("not-liked");
+					event.target.parentElement.classList.add("liked");
+				}, false);
+			}
+
+			// Create all the liked -> not-liked
+			like = document.getElementsByClassName("liked");
 			for (let i = 0; i < like.length; i++) { // Set up all of the button handlers, one by one
 				console.log(like[i].classList);
 				like[i].addEventListener('click', function(event) {
@@ -15,7 +51,7 @@
 			        fetch(`post/${post_id}`, {
 			          method: 'PUT',
 			          body: JSON.stringify({
-			              liked: true
+			              liked: false
 			          })
 			        })	//Display the new like count, asynchronously, sequenced after updating the DB is done
 				        .then(function(){
@@ -27,13 +63,13 @@
 								like[i].nextElementSibling.innerHTML = likes_count;
 							});
 						});
-
-					//Update to new heart emoji to indicate it was liked
-					event.target.classList.remove("far");
-					event.target.classList.add("fas");
-					event.target.classList.add("light-accent");
-					event.target.classList.remove("neutral-link");
-
+					//Update to new heart emoji to indicate it was unliked
+					event.target.classList.remove("fas");
+					event.target.classList.remove("light-accent");
+					event.target.classList.add("far");
+					//event.target.classList.add("neutral-link");
+					event.target.parentElement.classList.add("not-liked");
+					event.target.parentElement.classList.remove("liked");
 				}, false);
 			}
 		});
@@ -43,7 +79,7 @@
 
 {% block body %}
     {% for post in posts %}
-    	<div class="mx-2 px-5 card profile-border background-color neutral-color">
+    	<div class="mt-3 mx-2 px-5 card profile-border background-color neutral-color">
 			<div style="font-size: 20px" class="card-body">
 				<h3 class="card-title text-center light-accent">Posted by <strong> {{ post.username }}</strong></h3>
 				<h6 class="mb-2 card-subtitle text-center text-muted"> {{post.date}} </h6>
@@ -51,7 +87,7 @@
 				<p style="display: none"> {{post.id}} </p>
 				<div class="mt-2 text-center mb-n2">
 					{% if user in post.likes.all %} 
-						<i class="light-accent fas fa-heart mr-1"></i>
+						<a class="liked"><i class="light-accent fas fa-heart mr-1"></i></a>
 					{% else %}
 						<a class="not-liked"><i class="neutral-link far fa-heart mr-1"></i></a> 
 					{% endif %} 

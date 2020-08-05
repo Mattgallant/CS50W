@@ -7,15 +7,21 @@ from django.urls import reverse
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
 
 from .models import User, Post
 
 
 def index(request):
     posts = Post.objects.all()
+
+    paginator = Paginator(posts, 2)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     user = request.user
-    print(posts[0].likes.all())
-    return render(request, "network/index.html", {"posts": posts, "current_user": user})
+    return render(request, "network/index.html", {"posts": page_obj, "current_user": user})
 
 
 def profile(request, username):
@@ -60,7 +66,30 @@ def following(request):
 
 @login_required 
 def new_post(request):
-    return render(request, "network/new.html")
+    if request.method== "POST":
+        content = request.POST["content"]
+        username = request.user.username
+        post = Post(content = content, username = username)
+        post.save()
+
+        return render(request, "network/new.html", {"message": True})
+    else:
+        return render(request, "network/new.html")
+
+@login_required 
+def edit(request, post_id):
+    post = Post.objects.filter(pk = post_id).first()
+
+    content = post.content
+
+    if request.method== "POST":
+        content = request.POST["content"]
+        post.content = content
+        post.save()
+
+        return render(request, "network/edit.html", {"message": True, "content": content, "post_id": post_id})
+    else:
+        return render(request, "network/edit.html", {"content": content, "post_id": post_id})
 
 @csrf_exempt
 @login_required

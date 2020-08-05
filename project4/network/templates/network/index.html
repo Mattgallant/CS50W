@@ -1,12 +1,62 @@
 {% extends "network/layout.html" %}
 
+{% block head %}
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function() {
+			let like = document.getElementsByClassName("not-liked");
+			console.log(like.length);
+			for (let i = 0; i < like.length; i++) { // Set up all of the button handlers, one by one
+				console.log(like[i].classList);
+				like[i].addEventListener('click', function(event) {
+					//Get post based on post id
+					let post_id = parseInt(like[i].parentElement.previousElementSibling.innerHTML);
+
+					//Update database with new like
+			        fetch(`post/${post_id}`, {
+			          method: 'PUT',
+			          body: JSON.stringify({
+			              liked: true
+			          })
+			        })	//Display the new like count, asynchronously, sequenced after updating the DB is done
+				        .then(function(){
+				        	fetch(`post/${post_id}`)
+							// Put response into json form
+							.then(response => response.json())
+							.then(data => {
+								likes_count = data.likes.length;
+								like[i].nextElementSibling.innerHTML = likes_count;
+							});
+						});
+
+					//Update to new heart emoji to indicate it was liked
+					event.target.classList.remove("far");
+					event.target.classList.add("fas");
+					event.target.classList.add("light-accent");
+					event.target.classList.remove("neutral-link");
+
+				}, false);
+			}
+		});
+	</script>
+{% endblock %}
+
+
 {% block body %}
     {% for post in posts %}
-    	<div class="card profile-border background-color neutral-color">
-			<div class="card-body">
-				<h3 class="card-title text-center light-accent">Posted by {{ post.username }} at {{post.date}}</h3>
+    	<div class="mx-2 px-5 card profile-border background-color neutral-color">
+			<div style="font-size: 20px" class="card-body">
+				<h3 class="card-title text-center light-accent">Posted by <strong> {{ post.username }}</strong></h3>
+				<h6 class="mb-2 card-subtitle text-center text-muted"> {{post.date}} </h6>
 				<p> {{post.content}} </p>
-				<p> The post has {{post.likes|length}} likes </p>
+				<p style="display: none"> {{post.id}} </p>
+				<div class="mt-2 text-center mb-n2">
+					{% if user in post.likes.all %} 
+						<i class="light-accent fas fa-heart mr-1"></i>
+					{% else %}
+						<a class="not-liked"><i class="neutral-link far fa-heart mr-1"></i></a> 
+					{% endif %} 
+					<span> {{post.likes.count}} </span>
+				</div>
 			</div>
 		</div>
     {% empty %}

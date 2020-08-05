@@ -4,21 +4,26 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.http import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, Post
 
 
 def index(request):
     posts = Post.objects.all()
-    return render(request, "network/index.html", {"posts": posts})
+    user = request.user
+    print(posts[0].likes.all())
+    return render(request, "network/index.html", {"posts": posts, "current_user": user})
 
 
 def profile(request, username):
-    user = User.objects.get(username=username)
+    profile = User.objects.get(username=username)
     # followers = len(user.followers.all())
-    following = len(user.following.all())
+    following = len(profile.following.all())
     followers = get_followers(username)
-    return render(request, "network/profile.html", {"username": username, "followers": followers, "following": following})
+    return render(request, "network/profile.html", {"username": username, "followers": followers, "following": following, "profile": profile})
 
 def follow(request, username):
     """
@@ -52,11 +57,38 @@ def following(request):
 
     return render(request, "network/following.html", {"following": following})
 
+
 @login_required 
 def new_post(request):
     return render(request, "network/new.html")
 
+@csrf_exempt
+@login_required
+def post_api(request, post_id):
+    try:
+        post = Post.objects.get(pk =post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
 
+    if request.method == "GET":
+        return JsonResponse(post.serialize())
+
+    # Update whether user liked or unliked
+    elif request.method == "PUT":
+        data = json.loads(request.body)
+        if data.get("liked") is not None:
+            if data["liked"] == True:
+                post.likes.add(request.user)
+            else:
+                post.likes.remove(request.user)
+        post.save()
+        return HttpResponse(status=204)
+
+    # Likes must be via GET or PUT
+    else:
+        return JsonResponse({
+            "error": "GET or PUT request required."
+        }, status=400)        
 
 # Login, Logout, Register Views, no need to touch
 def login_view(request):

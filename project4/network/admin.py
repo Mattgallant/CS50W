@@ -6,7 +6,7 @@ class UserAdmin(admin.ModelAdmin):
 	list_display= ("username", "email")
 
 class PostAdmin(admin.ModelAdmin):
-	list_display=("username", "date", "content")
+	list_display=("id", "username", "date", "content")
 
 
 admin.site.register(User, UserAdmin)

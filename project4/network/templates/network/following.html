@@ -8,7 +8,7 @@
 					<h3 class="card-title text-center light-accent"> Following </h3>
 					<hr class="dark-accent">
 					{% for user in following %}
-						<a href="{% url 'profile' user.username %}" style="font-size: 18px" class="neutral-link"> {{user.username}} </a>
+						<p><a href="{% url 'profile' user.username %}" style="font-size: 18px" class="neutral-link"> {{user.username}} </a></p>
 					{% endfor %}
 				</div>
 			</div>

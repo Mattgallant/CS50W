@@ -39,6 +39,11 @@
 
 
 
+.profile-edit-button{
+	background-color: #0B0C10;
+	color: white;
+}
+
 .profile-border{
 	border: 2px solid #45A29E;
 	border-radius: 15px
@@ -58,3 +63,12 @@
 .not-liked {
 	color: #45A29E;
 }
+
+
+
+.pagination-button{
+	background-color: #0B0C10;
+	color: white;
+	border-color: #45A29E;
+}
+

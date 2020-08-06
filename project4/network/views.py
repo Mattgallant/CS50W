@@ -13,23 +13,29 @@ from .models import User, Post
 
 
 def index(request):
-    posts = Post.objects.all()
-
-    paginator = Paginator(posts, 2)
+    posts = Post.objects.all().order_by('-date')
+    paginator = Paginator(posts, 10)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    user = request.user
-    return render(request, "network/index.html", {"posts": page_obj, "current_user": user})
+    return render(request, "network/index.html", {"page_obj": page_obj, "current_user": request.user})
 
 
 def profile(request, username):
     profile = User.objects.get(username=username)
-    # followers = len(user.followers.all())
     following = len(profile.following.all())
     followers = get_followers(username)
-    return render(request, "network/profile.html", {"username": username, "followers": followers, "following": following, "profile": profile})
+
+    posts = Post.objects.filter(username = username).order_by('-date')
+    paginator = Paginator(posts, 10)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+
+    return render(request, "network/profile.html", {"username": username, "followers": followers, 
+        "following": following, "profile": profile, "page_obj":page_obj})
 
 def follow(request, username):
     """

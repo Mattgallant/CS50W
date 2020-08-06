@@ -1,74 +1,7 @@
 {% extends "network/layout.html" %}
 
-{% block head %}
-	<script type="text/javascript">
-		function unlike(element){
-			element.firstChild.classList.remove("fas");
-			element.firstChild.classList.add("far");
-			element.firstChild.classList.add("neutral-link");
-			element.firstChild.classList.remove("light-accent");
-			element.onclick= function() {
-				like(element);
-			}
-			let post_id = parseInt(element.parentElement.previousElementSibling.innerHTML);
-
-			//Update database with new like
-		    fetch(`post/${post_id}`, {
-		      method: 'PUT',
-		      body: JSON.stringify({
-		          liked: false
-		      })
-		    })	//Display the new like count, asynchronously, sequenced after updating the DB is done
-	        .then(function(){
-	        	fetch(`post/${post_id}`)
-				// Put response into json form
-				.then(response => response.json())
-				.then(data => {
-					likes_count = data.likes.length;
-					element.nextElementSibling.innerHTML = likes_count;
-				});
-			});
-		}
-
-		function like(element){
-			element.firstChild.classList.remove("far");
-			element.firstChild.classList.add("fas");
-			element.firstChild.classList.add("light-accent");
-			element.firstChild.classList.remove("neutral-link");
-			element.onclick= function() {
-				unlike(element);
-			}
-			//Get post based on post id
-			let post_id = parseInt(element.parentElement.previousElementSibling.innerHTML);
-
-			//Update database with new like
-	        fetch(`post/${post_id}`, {
-	          method: 'PUT',
-	          body: JSON.stringify({
-	              liked: true
-	          })
-	        })	//Display the new like count, asynchronously, sequenced after updating the DB is done
-	       	.then(function(event){
-	        	fetch(`post/${post_id}`)
-				// Put response into json form
-				.then(response => response.json())
-				.then(data => {
-					likes_count = data.likes.length;
-					element.nextElementSibling.innerHTML = likes_count;
-				});
-			});
-		}
-
-		function login_message(element){
-			element.nextElementSibling.nextElementSibling.style="display: block";
-		}
-
-	</script>
-{% endblock %}
-
-
 {% block body %}
-    {% for post in posts %}
+    {% for post in page_obj %}
     	<div class="mt-3 mx-2 px-5 card profile-border background-color neutral-color">
 			<div style="font-size: 22px" class="card-body">
 				<h3 class="card-title text-center light-accent">Posted by <a class="light-accent" href="users/{{post.username}}"><strong> {{ post.username }}</strong></a></h3>
@@ -98,21 +31,28 @@
     {% empty %}
     	<h3 class="text-center light-accent"> There are currently no posts </h3>
     {% endfor %}
-	<div class="light-accent pagination">
-		<span class="step-links">
-		    {% if page_obj.has_previous %}
-		        <a href="?page=1">&laquo; first</a>
-		        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-		    {% endif %}
 
-		    <span class="current">
-		        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-		    </span>
-
-		    {% if page_obj.has_next %}
-		        <a href="?page={{ page_obj.next_page_number }}">next</a>
-		        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-		    {% endif %}
-		</span>
-	</div>
+	<nav class="light-accent mt-5 text-center" aria-label="Page navigation example">
+		<p class="" style="font-size: 20px">
+	        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+	    </p>
+		<ul class="d-flex justify-content-center pagination">
+			{% if page_obj.has_previous %}
+				<li class="follow-button page-item">
+					<a class="page-link pagination-button" href="?page=1"><i class="fas mr-1 fa-fast-backward"></i>First</a>
+				</li>
+				<li class="follow-button page-item">
+					<a class="page-link pagination-button" href="?page={{ page_obj.previous_page_number }}"><i class="mr-1 fas fa-step-backward"></i>Previous</a>
+				</li>
+			{% endif %}
+			{% if page_obj.has_next %}
+				<li class="follow-button page-item">
+					<a class="page-link pagination-button" href="?page={{ page_obj.next_page_number }}">Next<i class="ml-1 fas fa-step-forward"></i></a>
+				</li>
+				<li class="follow-button page-item">
+					<a class="page-link pagination-button" href="?page={{ page_obj.paginator.num_pages }}">Last<i class="fas fa-fast-forward ml-1"></i></a>
+				</li>
+			{% endif %}
+		</ul>
+	</nav>
 {% endblock %}

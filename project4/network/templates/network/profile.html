@@ -4,10 +4,10 @@
 	<div class="card profile-border background-color neutral-color">
 		<div class="card-body">
 		  	<div class="row">
-		  		<div class="col-4">
+		  		<div class="mx-4 mt-3 col-4"> <!-- Profile info -->
 		  			<div class="row">
 		  				<div class="col-4 d-flex align-content-center">
-		  					<i class="ml-2 text-center fas fa-user-circle" style="font-size:100px"></i>
+		  					<i class="ml-3 text-center fas fa-user-circle" style="font-size:100px"></i>
 		  				</div>
 		  				<div class="col-8 mt-3">
 							<h1 class="card-title text-center light-accent">{{ profile.username }}</h1>
@@ -34,12 +34,62 @@
 						{% endif %}
 					{% endif %}
 				</div>
-				<div class="col-1"></div> <!-- Space Col -->
+				<div class=""></div> <!-- Space Col -->
 				<div class="col-7 mt-4">
-					<div class="card profile-border alt-background-color neutral-color">
-						<div class="card-body">
+					<h2 class="card-title text-center light-accent">Posts</h2>
+					{% for post in page_obj %}
+				    	<div class="mt-3 mx-2 px-5 card profile-border alt-background-color neutral-color">
+							<div style="font-size: 22px" class="card-body">
+								<h6 class="mb-2 card-subtitle text-center text-muted"> {{post.date}} </h6>
+								<p> {{post.content}} </p>
+								<p style="display: none"> {{post.id}} </p>
+								<div class="mt-2 text-center">
+									{% if user.is_authenticated %}
+										{% if user in post.likes.all %} 
+											<a onclick="profile_unlike(this, 'profile')"><i class="light-accent fas fa-heart mr-1"></i></a>
+										{% else %}
+											<a onclick="profile_like(this, 'profile')"><i class="neutral-link far fa-heart mr-1"></i></a> 
+										{% endif %} 
+									{% else %}
+										<a onclick="login_message(this)"><i class="neutral-link far fa-heart mr-1"></i></a>
+									{% endif %}
+									<span> {{post.likes.count}} </span>
+									<p style="display: none" class="text-muted"> <a href="{% url 'login' %}" class="light-accent">Login</a> to like posts!</p>
+								</div>
+								{% if post.username == user.username %}
+								<div class="d-flex justify-content-center mt-2">
+									<a href="{% url 'edit' post.id %}"> <button class="btn profile-edit-button" style="font-size:20px"> Edit </button></a>
+								</div>
+								{% endif %}
+							</div>
 						</div>
-					</div>
+				    {% empty %}
+				    	<h3 class="text-center light-accent"> There are currently no posts by {{username}}. </h3>
+				    {% endfor %}
+
+					<nav class="light-accent mt-5 text-center" aria-label="Page navigation example">
+						<p class="" style="font-size: 20px">
+					        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+					    </p>
+						<ul class="d-flex justify-content-center pagination">
+							{% if page_obj.has_previous %}
+								<li class="follow-button page-item">
+									<a class="page-link pagination-button" href="?page=1"><i class="fas mr-1 fa-fast-backward"></i>First</a>
+								</li>
+								<li class="follow-button page-item">
+									<a class="page-link pagination-button" href="?page={{ page_obj.previous_page_number }}"><i class="mr-1 fas fa-step-backward"></i>Previous</a>
+								</li>
+							{% endif %}
+							{% if page_obj.has_next %}
+								<li class="follow-button page-item">
+									<a class="page-link pagination-button" href="?page={{ page_obj.next_page_number }}">Next<i class="ml-1 fas fa-step-forward"></i></a>
+								</li>
+								<li class="follow-button page-item">
+									<a class="page-link pagination-button" href="?page={{ page_obj.paginator.num_pages }}">Last<i class="fas fa-fast-forward ml-1"></i></a>
+								</li>
+							{% endif %}
+						</ul>
+					</nav>
 				</div>
 			</div>
 		</div>

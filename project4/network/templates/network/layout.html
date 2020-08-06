@@ -6,6 +6,7 @@
 		<title>{% block title %}Social Network{% endblock %}</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<link href="{% static 'network/styles.css' %}" rel="stylesheet">
+		<script src="{% static 'network/like.js' %}"></script>
 		<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 		<script src="https://kit.fontawesome.com/da1b201c0d.js" crossorigin="anonymous"></script>
 		{% block head %}
@@ -28,7 +29,7 @@
 			<div class="pl-5">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="navbar-brand light-accent" href="#"><h1>The Network</h1></a>
+						<a class="navbar-brand light-accent" href="{% url 'index' %}"><h1>The Network</h1></a>
 					</li>
 				</ul>
 			</div>

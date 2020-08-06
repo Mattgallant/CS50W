@@ -125,3 +125,41 @@ function login_message(element){
 	/* Takes passed in ELEMENT and updates it so it can be seen. Used for "require login" message */
 	element.nextElementSibling.nextElementSibling.style="display: block";
 }
+
+
+function edit(element){
+	/* Handles replacing the <p> that has post contents with textarea to edit and shows edit button */
+	var textarea = document.createElement("textarea");
+	textarea.classList.add("w-100");
+
+	element.style.display="none";
+	element.nextElementSibling.style.display ="block";
+	element = element.parentElement; 
+	element = element.previousElementSibling.previousElementSibling.previousElementSibling.firstElementChild;
+
+	textarea.innerHTML = element.innerHTML;
+	element.parentElement.replaceChild(textarea, element);
+}
+
+function save(element){
+	//Display edit button
+	element.style.display="none";
+	element.previousElementSibling.style.display ="block";
+
+	//Display new text from textarea as a <p>
+	element = element.parentElement; 
+	element = element.previousElementSibling.previousElementSibling.previousElementSibling.firstElementChild; //Now <textarea>
+	var p = document.createElement("p");
+	p.innerHTML = element.value;
+	element.parentElement.replaceChild(p, element);
+
+	//Save new content to database
+	let post_id = parseInt(p.parentElement.nextElementSibling.innerHTML);
+    fetch(`../post/${post_id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+          content_changed: true,
+          content: p.innerHTML
+      })
+    })
+}

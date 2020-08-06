@@ -1,24 +1,78 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    <div class="row neutral-color">
-    	<div class="col-3">
-			<div class="card profile-border background-color neutral-color">
-				<div class="card-body text-center">
+	<div class="card profile-border background-color neutral-color" style="min-height:60vh">
+	    <div class="row neutral-color">
+	    	<div class="col-4">
+				<div class="card-body text-center" style=" line-height:9px">
 					<h3 class="card-title text-center light-accent"> Following </h3>
 					<hr class="dark-accent">
 					{% for user in following %}
-						<p><a href="{% url 'profile' user.username %}" style="font-size: 18px" class="neutral-link"> {{user.username}} </a></p>
+						<p><a href="{% url 'profile' user.username %}" style="font-size: 18px;" class="neutral-link"> {{user.username}} </a></p>
 					{% endfor %}
 				</div>
+				{% if page_obj %}
+					<nav class="fixed-scroll-following mt-5 light-accent text-center" aria-label="Page navigation example">
+						<p class="" style="font-size: 20px">
+					        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+					    </p>
+						<ul class="d-flex justify-content-center pagination">
+							{% if page_obj.has_previous %}
+								<li class="follow-button page-item">
+									<a class="page-link pagination-button" href="?page=1"><i class="fas mr-1 fa-fast-backward"></i>First</a>
+								</li>
+								<li class="follow-button page-item">
+									<a class="page-link pagination-button" href="?page={{ page_obj.previous_page_number }}"><i class="mr-1 fas fa-step-backward"></i>Previous</a>
+								</li>
+							{% endif %}
+							{% if page_obj.has_next %}
+								<li class="follow-button page-item">
+									<a class="page-link pagination-button" href="?page={{ page_obj.next_page_number }}">Next<i class="ml-1 fas fa-step-forward"></i></a>
+								</li>
+								<li class="follow-button page-item">
+									<a class="page-link pagination-button" href="?page={{ page_obj.paginator.num_pages }}">Last<i class="fas fa-fast-forward ml-1"></i></a>
+								</li>
+							{% endif %}
+						</ul>
+					</nav>
+				{% endif %}
 			</div>
-    	</div>
-    	<div class="col-9">
-			<div class="card profile-border background-color neutral-color">
+	    	<div class="col-8">
 				<div class="card-body">
-					<h3 class="card-title text-center light-accent"> Posts </h3>
+					<h2 class="card-title text-center light-accent">Posts</h2>
+					{% for post in page_obj %}
+				    	<div class="mt-3 mx-2 px-5 card profile-border alt-background-color neutral-color">
+							<div style="font-size: 20px" class="card-body">
+								<h3 class="card-title text-center light-accent">Posted by <a class="light-accent" href="users/{{post.username}}"><strong> {{ post.username }}</strong></a></h3>
+								<h6 class="mb-2 card-subtitle text-center text-muted"> {{post.date}} </h6>
+								<div class="content-box">
+									<p> {{post.content}} </p>
+								</div>
+								<p style="display: none"> {{post.id}} </p>
+								<div class="mt-2 text-center">
+									{% if user.is_authenticated %}
+										{% if user in post.likes.all %} 
+											<a onclick="profile_unlike(this, 'profile')"><i class="light-accent fas fa-heart mr-1"></i></a>
+										{% else %}
+											<a onclick="profile_like(this, 'profile')"><i class="neutral-link far fa-heart mr-1"></i></a> 
+										{% endif %} 
+									{% else %}
+										<a onclick="login_message(this)"><i class="neutral-link far fa-heart mr-1"></i></a>
+									{% endif %}
+									<span> {{post.likes.count}} </span>
+									<p style="display: none" class="text-muted"> <a href="{% url 'login' %}" class="light-accent">Login</a> to like posts!</p>
+								</div>
+							</div>
+						</div>
+				    {% empty %}
+				    	{% if not following %}
+				    		<h3 class="text-center light-accent"> You aren't following anybody! </h3>
+				    	{% else %}
+				    		<h3 class="text-center light-accent"> No posts from the people you are following! </h3>
+				    	{% endif %}
+				    {% endfor %}
 				</div>
-			</div>
+    		</div>
     	</div>
     </div>
 {% endblock %}

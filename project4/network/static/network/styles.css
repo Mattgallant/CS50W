@@ -60,10 +60,15 @@
 }
 
 .fixed-scroll{
-	border: solid 1px black;
     position: fixed;
     top: 57%;
     margin-left: 7%;
+}
+
+.fixed-scroll-following{
+    position: fixed;
+    top: 57%;
+    margin-left: 6.5%;
 }
 
 

@@ -6,7 +6,9 @@
 			<div style="font-size: 22px" class="card-body">
 				<h3 class="card-title text-center light-accent">Posted by <a class="light-accent" href="users/{{post.username}}"><strong> {{ post.username }}</strong></a></h3>
 				<h6 class="mb-2 card-subtitle text-center text-muted"> {{post.date}} </h6>
-				<p> {{post.content}} </p>
+				<div class="content-box">
+					<p> {{post.content}} </p>
+				</div>
 				<p style="display: none"> {{post.id}} </p>
 				<div class="mt-2 text-center">
 					{% if user.is_authenticated %}
@@ -22,9 +24,10 @@
 					<p style="display: none" class="text-muted"> <a href="{% url 'login' %}" class="light-accent">Login</a> to like posts!</p>
 				</div>
 				{% if post.username == user.username %}
-				<div class="d-flex justify-content-center mt-2">
-					<a href="{% url 'edit' post.id %}"> <button class="btn follow-button" style="font-size:20px"> Edit </button></a>
-				</div>
+					<div class="d-flex justify-content-center mt-2">
+							<button onclick="edit(this)" class="btn follow-button" style="font-size:20px"> Edit </button>
+							<button onclick="save(this)" class="btn follow-button" style="font-size:20px; display:none"> Save </button>
+					</div>
 				{% endif %}
 			</div>
 		</div>

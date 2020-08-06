@@ -33,29 +33,31 @@
 							{% endif %}
 						{% endif %}
 					{% endif %}
-					<nav class="fixed-scroll light-accent mt-5 text-center" aria-label="Page navigation example">
-						<p class="" style="font-size: 20px">
-					        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-					    </p>
-						<ul class="d-flex justify-content-center pagination">
-							{% if page_obj.has_previous %}
-								<li class="follow-button page-item">
-									<a class="page-link pagination-button" href="?page=1"><i class="fas mr-1 fa-fast-backward"></i>First</a>
-								</li>
-								<li class="follow-button page-item">
-									<a class="page-link pagination-button" href="?page={{ page_obj.previous_page_number }}"><i class="mr-1 fas fa-step-backward"></i>Previous</a>
-								</li>
-							{% endif %}
-							{% if page_obj.has_next %}
-								<li class="follow-button page-item">
-									<a class="page-link pagination-button" href="?page={{ page_obj.next_page_number }}">Next<i class="ml-1 fas fa-step-forward"></i></a>
-								</li>
-								<li class="follow-button page-item">
-									<a class="page-link pagination-button" href="?page={{ page_obj.paginator.num_pages }}">Last<i class="fas fa-fast-forward ml-1"></i></a>
-								</li>
-							{% endif %}
-						</ul>
-					</nav>
+					{% if page_obj %}
+						<nav class="fixed-scroll light-accent mt-5 text-center" aria-label="Page navigation example">
+							<p class="" style="font-size: 20px">
+						        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+						    </p>
+							<ul class="d-flex justify-content-center pagination">
+								{% if page_obj.has_previous %}
+									<li class="follow-button page-item">
+										<a class="page-link pagination-button" href="?page=1"><i class="fas mr-1 fa-fast-backward"></i>First</a>
+									</li>
+									<li class="follow-button page-item">
+										<a class="page-link pagination-button" href="?page={{ page_obj.previous_page_number }}"><i class="mr-1 fas fa-step-backward"></i>Previous</a>
+									</li>
+								{% endif %}
+								{% if page_obj.has_next %}
+									<li class="follow-button page-item">
+										<a class="page-link pagination-button" href="?page={{ page_obj.next_page_number }}">Next<i class="ml-1 fas fa-step-forward"></i></a>
+									</li>
+									<li class="follow-button page-item">
+										<a class="page-link pagination-button" href="?page={{ page_obj.paginator.num_pages }}">Last<i class="fas fa-fast-forward ml-1"></i></a>
+									</li>
+								{% endif %}
+							</ul>
+						</nav>
+					{% endif %}
 				</div>
 				<div class=""></div> <!-- Space Col -->
 				<div class="col-7 mt-4">
@@ -64,7 +66,9 @@
 				    	<div class="mt-3 mx-2 px-5 card profile-border alt-background-color neutral-color">
 							<div style="font-size: 20px" class="card-body">
 								<h6 class="mb-2 card-subtitle text-center text-muted"> {{post.date}} </h6>
-								<p> {{post.content}} </p>
+								<div class="content-box">
+									<p> {{post.content}} </p>
+								</div>
 								<p style="display: none"> {{post.id}} </p>
 								<div class="mt-2 text-center">
 									{% if user.is_authenticated %}
@@ -80,9 +84,10 @@
 									<p style="display: none" class="text-muted"> <a href="{% url 'login' %}" class="light-accent">Login</a> to like posts!</p>
 								</div>
 								{% if post.username == user.username %}
-								<div class="d-flex justify-content-center mt-2">
-									<a href="{% url 'edit' post.id %}"> <button class="btn profile-edit-button" style="font-size:20px"> Edit </button></a>
-								</div>
+									<div class="d-flex justify-content-center mt-2">
+										<button onclick="edit(this)" class="btn profile-edit-button" style="font-size:20px"> Edit </button>
+										<button onclick="save(this)" class="btn profile-edit-button" style="font-size:20px; display:none"> Save </button>
+									</div>
 								{% endif %}
 							</div>
 						</div>

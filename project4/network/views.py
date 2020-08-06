@@ -67,7 +67,14 @@ def following(request):
     user = request.user
     following = request.user.following.all()
 
-    return render(request, "network/following.html", {"following": following})
+    following_usernames = [user.username for user in following]
+    following_posts = Post.objects.filter(username__in=following_usernames).order_by('-date')
+    paginator = Paginator(following_posts, 10)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "network/following.html", {"following": following, "page_obj": page_obj})
 
 
 @login_required 
@@ -81,21 +88,6 @@ def new_post(request):
         return render(request, "network/new.html", {"message": True})
     else:
         return render(request, "network/new.html")
-
-@login_required 
-def edit(request, post_id):
-    post = Post.objects.filter(pk = post_id).first()
-
-    content = post.content
-
-    if request.method== "POST":
-        content = request.POST["content"]
-        post.content = content
-        post.save()
-
-        return render(request, "network/edit.html", {"message": True, "content": content, "post_id": post_id})
-    else:
-        return render(request, "network/edit.html", {"content": content, "post_id": post_id})
 
 @csrf_exempt
 @login_required
@@ -116,6 +108,8 @@ def post_api(request, post_id):
                 post.likes.add(request.user)
             else:
                 post.likes.remove(request.user)
+        if data.get("content_changed") is True:
+            post.content = data["content"]
         post.save()
         return HttpResponse(status=204)
 

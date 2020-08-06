@@ -59,6 +59,13 @@
 	color: #66FCF1;
 }
 
+.fixed-scroll{
+	border: solid 1px black;
+    position: fixed;
+    top: 57%;
+    margin-left: 7%;
+}
+
 
 .not-liked {
 	color: #45A29E;

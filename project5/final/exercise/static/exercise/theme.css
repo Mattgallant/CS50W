@@ -1,0 +1,34 @@
+
+.main-background{
+	background: radial-gradient(circle, rgba(193,200,228,1) 0%, rgba(90,185,234,1) 73%);
+}
+
+.title{
+	color:white;
+	background-color: #5ab9ea;
+}
+
+.btn-main{
+	background-color: #5680E9;
+	color: white;
+	border: 1px solid #c1c8e4;
+	border-radius: 15px;
+	font-size: 30px;
+	padding: 5px;
+}
+
+@keyframes fade_in {
+    from {
+        opacity: 0%;
+        font-size: 1px;
+    }
+    to {
+       	opacity: 100%;
+        font-size: 18px;
+    }
+}
+
+.animate{
+	animation-name: fade_in;
+	animation-duration: 3s;
+}

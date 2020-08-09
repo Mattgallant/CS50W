@@ -4,19 +4,25 @@
 {% block body %}
 	<div class="pt-3 text-center" style="color: white">
 		{% if user.is_authenticated %}
-			<a href="/admin" style="color: white" class="mt-n5 p-0"> Admin Page </a>
+			<a href="/admin" style="color: white" class="mt-n5 p-0" style='display: block'> Admin Page </a>
 		{% endif %}
-		<a  href="{% url 'index' %}"><h1 class="display-1" id="title" style="color: white">Matt's Exercise Stats</h1></a>
+		<div class="mt-4">
+			<a href="{% url 'index' %}" id="title" class=""><img src="https://fontmeme.com/permalink/200809/cd9a486bf8ec1da1b7d3edf8d86e55d2.png" alt="fancy-fonts" border="0"></a>
+		</div>
 	</div>
 	<div class="d-flex justify-content-center nav mt-5">
-		<a href="#" class="px-2 mx-3 btn-main" id="list">Runs List</a>
+		<a href="#" class="px-2 mx-3 btn-main" id="list">Run List</a>
 		<a href="#" class="px-2 mx-3 btn-main">Goals & Personal Records</a>
 		<a href="#" class="px-2 mx-3 btn-main">Latest 5 Runs</a>
 		<a href="#" class="px-2 mx-3 btn-main" id="stats">Stats</a>
 	</div>
 
+	<div id="home-view" class="my-5" style="display: block">
+		<p class="list-background" style="font-size: 30px; color: black"> This site was done for CS50 Web (2020). It is a single page application created with Django, Javascript, Python, HTML and CSS. This application displays information about my runs as recorded by my Garmin Connect GPS watch. </p>
+	</div>
+
 	<div id="list-view" class="my-5" style="display: none"> 
-		<div class="row text-center" style="font-size: 20px">
+		<div class="row text-center" style="font-size: 23px">
 			<div class="col-3">
 				<strong>Date</strong>
 			</div>

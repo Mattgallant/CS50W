@@ -13,10 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function load_stats(){
+	document.querySelector('#home-view').style.display = 'none';
 	document.querySelector('#list-view').style.display = 'none';
 	document.querySelector('#stats-view').style.display = 'block';
 
-	document.querySelector('#title').innerHTML = "Stats"
+	document.querySelector('#title').innerHTML = '<img src="https://fontmeme.com/permalink/200809/e5484caf6cb5075c12ec444bdd77e883.png" alt="fancy-fonts" border="0">'
 
 	const canvas = document.getElementById("chart");
 
@@ -125,12 +126,13 @@ function load_stats(){
 
 function load_run_list(){
   // Show the mailbox and hide other views
+  	document.querySelector('#home-view').style.display = 'none';
   	document.querySelector('#stats-view').style.display = 'none';
 	document.querySelector('#list-view').style.display = 'block';
 
 
   // Show the mailbox name
-	document.querySelector('#title').innerHTML = "Run List";
+	document.querySelector('#title').innerHTML = '<img src="https://fontmeme.com/permalink/200809/86d2f43f8360406b6e6a6edab09021d0.png" alt="fancy-fonts" border="0">'
 	fetch("runs")
     // Put response into json form
     .then(response => response.json())

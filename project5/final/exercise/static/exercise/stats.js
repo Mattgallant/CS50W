@@ -155,7 +155,7 @@ function load_run_list(){
 						${seconds_to_time(data[i].elapsed_time)}
 					</div>
 					<div class="col-3">
-						${data[i].average_speed} meters/second
+						${meterssecond_to_minutesmile(data[i].average_speed)} minutes/mile
 					</div>
 					<div class="col-2 text-right">
 						${meters_to_feet(data[i].total_elevation_gain)} feet
@@ -177,12 +177,16 @@ function meters_to_feet(meters){
 
 function seconds_to_time(seconds){
 	minutes = Math.floor(seconds/60)
-	seconds = seconds % 60
+	seconds = (seconds % 60).toFixed(0)
 	if(seconds.toString().length == 1){
 		return `${minutes}:0${seconds}`;
 	} else{
 		return `${minutes}:${seconds}`;
 	}
+}
+
+function meterssecond_to_minutesmile(metersseconds){
+	return seconds_to_time((1/metersseconds) * (1609))
 }
 
 

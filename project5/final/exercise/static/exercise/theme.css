@@ -11,10 +11,17 @@
 .btn-main{
 	background-color: #5680E9;
 	color: white;
-	border: 1px solid #c1c8e4;
 	border-radius: 15px;
 	font-size: 30px;
 	padding: 5px;
+	box-shadow: 2px 2px black;
+	opacity: 70%;
+	font-family: cursive;
+}
+
+.btn-main:hover{
+	opacity: 100%;
+	box-shadow: 3px 3px black;
 }
 
 .btn-sub{

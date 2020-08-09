@@ -6,27 +6,42 @@
 		{% if user.is_authenticated %}
 			<a href="/admin" style="color: white" class="mt-n5 p-0"> Admin Page </a>
 		{% endif %}
-		<a  href="{% url 'index' %}"><h1 class="display-1" id="title" style="color: white">Exercise Stats</h1></a>
+		<a  href="{% url 'index' %}"><h1 class="display-1" id="title" style="color: white">Matt's Exercise Stats</h1></a>
 	</div>
 	<div class="d-flex justify-content-center nav mt-5">
-		<a href="#" class="px-2 mx-3 btn-main" id="list">List Runs</a>
-		<a href="#" class="px-2 mx-3 btn-main">Large button</a>
-		<a href="#" class="px-2 mx-3 btn-main">Large button</a>
-		<a href="#" class="px-2 mx-3 btn-main">Large button</a>
+		<a href="#" class="px-2 mx-3 btn-main" id="list">Runs List</a>
+		<a href="#" class="px-2 mx-3 btn-main">Goals & Personal Records</a>
+		<a href="#" class="px-2 mx-3 btn-main">Latest 5 Runs</a>
+		<a href="#" class="px-2 mx-3 btn-main" id="stats">Stats</a>
 	</div>
 
-
 	<div id="list-view" class="my-5" style="display: none"> 
-		<div class="row" style="font-size: 20px">
+		<div class="row text-center" style="font-size: 20px">
 			<div class="col-3">
 				<strong>Date</strong>
 			</div>
-			<div class="col-5">
-				<strong>Distance (Meters)</strong>
+			<div class="col-2">
+				<strong>Distance</strong>
 			</div>
-			<div class="col-4 text-right">
-				<strong>Elapsed Time (Seconds)
+			<div class="col-2">
+				<strong>Elapsed Time</strong>
 			</div>
+			<div class="col-3">
+				<strong>Average Speed</strong>
+			</div>			
+			<div class="col-2 text-right">
+				<strong> Elevation Gain </strong>
+			</div>		
+		</div>
+		<hr style="color:black;" class="mb-n1">
+	</div>
+
+	<div id="stats-view" class="my-5" style="display: none">
+		<canvas id="chart"></canvas>
+		<div class="mx-3">
+			<button type="button" data-toggle="button" class="btn btn-secondary" disabled>2019</button>
+			<button type="button" data-toggle="button" class="btn btn-secondary active" aria-pressed="true">2020</button>
+			<button type="button" data-toggle="button" class="btn btn-secondary" disabled>2021</button>
 		</div>
 	</div>
 {% endblock %}

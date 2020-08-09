@@ -17,13 +17,29 @@
 	padding: 5px;
 }
 
+.btn-sub{
+	background-color: #5680E9;
+	color: white;
+	border: 1px solid #c1c8e4;
+	border-radius: 15px;
+	font-size: 22px;
+	padding: 4px;
+}
+
+.list-background{
+	background-color: #C1C8E4;
+	border-radius: 12px;
+	padding: 5px;
+	opacity: 80%;
+}
+
 @keyframes fade_in {
     from {
         opacity: 0%;
         font-size: 1px;
     }
     to {
-       	opacity: 100%;
+       	opacity: 80%;
         font-size: 18px;
     }
 }

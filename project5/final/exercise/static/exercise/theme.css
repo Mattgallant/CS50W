@@ -52,7 +52,38 @@
     }
 }
 
-.animate{
+@keyframes grow{
+	from{
+		opacity: 80%;
+		font-size:18px;
+		height: 100%;
+	}
+	to{
+		opacity: 80%;
+		font-size: 20px;
+		height: 200%;
+	}
+}
+
+.run-item{
 	animation-name: fade_in;
 	animation-duration: 2s;
 }
+
+.run-item-font{
+	font-size: 18px;
+}
+
+.run-item:hover{
+	background-color: white;
+	animation-name: grow;
+	animation-duration: 1s;
+}
+
+.expanded{
+	opacity: 80%;
+	font-size: 20px;
+	height: 5em;
+	background-color: white;
+}
+

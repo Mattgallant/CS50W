@@ -144,24 +144,52 @@ function load_run_list(){
 			element.classList.add('px-2');
 			element.classList.add('py-1');
 			element.innerHTML = `
-				<div class="row animate text-center list-background" style="font-size: 18px">
-					<div class="col-3 text-left">
-						<strong>${data[i].start_date}</strong> 
-					</div>
-					<div class="col-2">
-						${meters_to_miles(data[i].distance)} miles
-					</div>
-					<div class="col-2">
-						${seconds_to_time(data[i].elapsed_time)}
-					</div>
-					<div class="col-3">
-						${meterssecond_to_minutesmile(data[i].average_speed)} minutes/mile
-					</div>
-					<div class="col-2 text-right">
-						${meters_to_feet(data[i].total_elevation_gain)} feet
+				<div class="run-item run-item-font text-center list-background">
+					<div class="row">
+						<div class="col-3 text-left">
+							<strong>${data[i].start_date}</strong> 
+						</div>
+						<div class="col-2">
+							${meters_to_miles(data[i].distance)} miles
+						</div>
+						<div class="col-2">
+							${seconds_to_time(data[i].elapsed_time)}
+						</div>
+						<div class="col-3">
+							${meterssecond_to_minutesmile(data[i].average_speed)} minutes/mile
+						</div>
+						<div class="col-2 text-right">
+							${meters_to_feet(data[i].total_elevation_gain)} feet
+						</div>
+					</div> 
+					<div class="row mt-2" style="display: none">
+						<div class="col-3 text-left">
+							<strong> Max Speed </strong> ${meterssecond_to_mph(data[i].max_speed)} miles/hour
+						</div>
+						<div class="col-3">
+							<strong> Avg Speed </strong> ${meterssecond_to_mph(data[i].average_speed)} miles/hour
+						</div> 
+						<div class="col-3">
+							<strong>Elev. Low:</strong> ${meters_to_feet(data[i].elev_low)} feet 
+						</div>
+						<div class="col-3 text-right">
+							<strong>Elev. High:</strong> ${meters_to_feet(data[i].elev_high)} feet 
+						</div>
 					</div>
 				</div>
 			`;
+			element.onmouseover = function(){
+				element.firstElementChild.classList.add('expanded');
+				element.firstElementChild.classList.remove("run-item-font");
+				element.firstElementChild.classList.remove("run-item");
+				element.firstElementChild.lastElementChild.style.display = "flex";
+				//element.innerHTML += "Cock sucker";
+			}
+			element.onmouseout = function(){
+				element.firstElementChild.classList.remove('expanded');
+				element.firstElementChild.classList.add("run-item-font");
+				element.firstElementChild.lastElementChild.style.display = "none";
+			}
 			document.querySelector('#list-view').append(element); 
 		}
 	});
@@ -187,6 +215,11 @@ function seconds_to_time(seconds){
 
 function meterssecond_to_minutesmile(metersseconds){
 	return seconds_to_time((1/metersseconds) * (1609))
+}
+
+function meterssecond_to_mph(meterssecond){
+	return (2.237*meterssecond).toFixed(2);
+
 }
 
 

@@ -8,13 +8,113 @@ document.addEventListener('DOMContentLoaded', function() {
   // Use buttons to toggle between views
   document.querySelector('#list').addEventListener('click', () => load_run_list());
   document.querySelector('#stats').addEventListener('click', ()=> load_stats());
+  document.querySelector('#goals').addEventListener('click', ()=> load_goals());
 
 });
 
+function load_goals(){
+	document.querySelector('#home-view').style.display = 'none';
+	document.querySelector('#list-view').style.display = 'none';
+	document.querySelector('#stats-view').style.display = 'none';
+	document.querySelector('#goals-view').style.display= 'block';
+
+	document.querySelector('#title').innerHTML = '<img src="https://fontmeme.com/permalink/200820/04ba5c6f25fdfc46b74e529313e1efda.png" alt="fancy-fonts" border="0">'
+
+	let year = 2020;
+	let miles = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	let cumulative_miles = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+	fetch("runs")
+	    // Put response into json form
+	    .then(response => response.json())
+	    .then(data => {
+	        // Show run items
+	        for (let i = 0; i < data.length; i++) {
+	        	switch(data[i].start_date.substring(0,3)){
+	        		case "Jan":
+	        			miles[0] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		case "Feb":
+	        			miles[1] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		case "Mar":
+	        			miles[2] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		case "Apr":
+	        			miles[3] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		case "May":
+	        			miles[4] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		case "Jun":
+	        			miles[5] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		case "Jul":
+	        			miles[6] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		case "Aug":
+	        			miles[7] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		case "Sep":
+	        			miles[8] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		case "Oct":
+	        			miles[9] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		case "Nov":
+	        			miles[10] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		case "Dec":
+	        			miles[11] += parseFloat(meters_to_miles(data[i].distance))
+	        			break;
+	        		default:
+	        			console.log("ERROR IN MONTH CALC");
+	        	}
+			}
+			for(let i = 0; i < miles.length; i++){
+				miles[i] = Math.round(miles[i]);
+			}
+			// calculate cumulative miles
+			for(let i=0; i < miles.length; i++){
+				if (i==0){
+					cumulative_miles[i] = miles[i];
+				}
+				else{
+					cumulative_miles[i] = cumulative_miles[i-1] + miles[i];
+				}
+			}
+			//Display progress bar for cumulative miles
+			move(0, cumulative_miles[11], 250);
+			document.getElementById("progress").innerHTML = `
+				${cumulative_miles[11]}/250
+			`
+		});
+}
+
+// Handles progress bar
+function move(i, current, goal) {
+  if (i == 0) {
+    i = 1;
+    var elem = document.getElementById("bar");
+    var width = 1;
+    var id = setInterval(frame, 20);
+    function frame() {
+      if (width >= (current/goal)*100) {
+        clearInterval(id);
+        i = 0;
+      } else {
+        width++;
+        elem.style.width = width + "%";
+        elem.innerHTML = width + "%";
+      }
+    }
+  }
+}
 
 function load_stats(){
 	document.querySelector('#home-view').style.display = 'none';
 	document.querySelector('#list-view').style.display = 'none';
+	document.querySelector('#goals-view').style.display= 'none';
 	document.querySelector('#stats-view').style.display = 'block';
 
 	document.querySelector('#title').innerHTML = '<img src="https://fontmeme.com/permalink/200809/e5484caf6cb5075c12ec444bdd77e883.png" alt="fancy-fonts" border="0">'
@@ -128,6 +228,7 @@ function load_run_list(){
   // Show the mailbox and hide other views
   	document.querySelector('#home-view').style.display = 'none';
   	document.querySelector('#stats-view').style.display = 'none';
+  	document.querySelector('#goals-view').style.display= 'none';
 	document.querySelector('#list-view').style.display = 'block';
 
 
@@ -164,10 +265,10 @@ function load_run_list(){
 					</div> 
 					<div class="row mt-2" style="display: none">
 						<div class="col-3 text-left">
-							<strong> Max Speed </strong> ${meterssecond_to_mph(data[i].max_speed)} miles/hour
+							<strong> Max Speed </strong> ${meterssecond_to_mph(data[i].max_speed)} mph
 						</div>
 						<div class="col-3">
-							<strong> Avg Speed </strong> ${meterssecond_to_mph(data[i].average_speed)} miles/hour
+							<strong> Avg Speed </strong> ${meterssecond_to_mph(data[i].average_speed)} mph
 						</div> 
 						<div class="col-3">
 							<strong>Elev. Low:</strong> ${meters_to_feet(data[i].elev_low)} feet 

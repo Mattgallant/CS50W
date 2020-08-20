@@ -82,8 +82,41 @@
 
 .expanded{
 	opacity: 80%;
-	font-size: 20px;
-	height: 5em;
+	font-size: 22px;
 	background-color: white;
 }
 
+
+
+.goal-box{
+	background-color: #C1C8E4;
+	border-radius: 12px;
+	padding: 5px;
+	opacity: 80%;
+	box-shadow: 2px 2px;
+	font-size: 25px;
+	margin-right: 20px;
+	margin-left: 20px;
+}
+
+.purple-highlight{
+	color: #8860D0;
+}
+
+#bar {
+  width: 1%;
+  height: 30px;
+  background-color: #8860D0;
+  border-radius: 7px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  text-align: center; /* To center it horizontally (if you want) */
+  line-height: 30px; /* To center it vertically */
+}
+
+#bar-outline{
+	width: 100%;
+	height: 34px;
+	border: 2px solid black;
+	border-radius: 8px;
+}

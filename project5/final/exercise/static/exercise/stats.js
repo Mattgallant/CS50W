@@ -18,7 +18,7 @@ function load_goals(){
 	document.querySelector('#stats-view').style.display = 'none';
 	document.querySelector('#goals-view').style.display= 'block';
 
-	document.querySelector('#title').innerHTML = '<img src="https://fontmeme.com/permalink/200820/04ba5c6f25fdfc46b74e529313e1efda.png" alt="fancy-fonts" border="0">'
+	document.querySelector('#title').innerHTML = '<img src="https://fontmeme.com/permalink/200822/bc119112532f10311689b97a70486d45.png" alt="fancy-fonts" border="0">'
 
 	let year = 2020;
 	let miles = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -117,7 +117,7 @@ function load_stats(){
 	document.querySelector('#goals-view').style.display= 'none';
 	document.querySelector('#stats-view').style.display = 'block';
 
-	document.querySelector('#title').innerHTML = '<img src="https://fontmeme.com/permalink/200809/e5484caf6cb5075c12ec444bdd77e883.png" alt="fancy-fonts" border="0">'
+	document.querySelector('#title').innerHTML = '<img src="https://fontmeme.com/permalink/200822/cb1e0c662e1c957129f5ae927994d148.png" alt="fancy-fonts" border="0">'
 
 	const canvas = document.getElementById("chart");
 
@@ -233,7 +233,7 @@ function load_run_list(){
 
 
   // Show the mailbox name
-	document.querySelector('#title').innerHTML = '<img src="https://fontmeme.com/permalink/200809/86d2f43f8360406b6e6a6edab09021d0.png" alt="fancy-fonts" border="0">'
+	document.querySelector('#title').innerHTML = '<img src="https://fontmeme.com/permalink/200822/e84cf316771697a6b19dd4ddb99ad3a6.png" alt="fancy-fonts" border="0">'
 	fetch("runs")
     // Put response into json form
     .then(response => response.json())
